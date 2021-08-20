@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        .backBtn{
+            float: right;
+        }
+        .searchbytable{
+            float: right;
+            font-size: x-large;
+        }
+        .searchinputtable{
+            width: 430px;
+        }
+        .createNewButton{
+            height: 70px;
+            width: 300px;
+            margin-left: 150px;
+            font-size: larger;
+        }
+    </style>
+</head>
+<body onclick="checkeverytime()">
+  <h1 class="mt-4">Experience
+    <h3>Resource</h3>
+    <div class="backBtn">
+            <a href="/exLandingPage" class="btn btn-primary">Back</a>
+    </div>
+    </h1>
+<br/>
+<br/>
+<br/>
+    <nav class="nav nav-pills flex-column flex-sm-row w3-light-grey">
+        <a class="flex-sm-fill text-sm-center nav-link active" href="/experience">Repository</a>
+        <a class="flex-sm-fill text-sm-center nav-link" href="/home">Lesson Plans</a>
+    </nav>
+<br/>
+<table >
+    <thead>
+      <tr>
+        <th class="searchbytable">Search by:</th>
+      </tr>
+    </thead>
+    <tbody>
+            <tr>
+                <td class="searchbytable">Title: </td>
+                <td>&nbsp;<input value="" placeholder="Enter Title" class="searchinputtable" onkeyup="searchFunction()" id="titleSearchInput"></td>
+                <form action="/experience/createNewResource" method="GET">
+                    <td rowspan="3"><button class="btn btn-primary createNewButton">Create New Resource</button></td>
+                </form>
+            </tr>
+            <tr>
+                <td class="searchbytable">Category: </td>
+                <td>&nbsp;<input value="" placeholder="Enter Category" class="searchinputtable" onkeyup="searchFunction()" id="categorySearchInput"></td>
+            </tr>
+            <tr>
+                <td class="searchbytable">Author: </td>
+                <td>&nbsp;<input value="" placeholder="Enter Author" class="searchinputtable" onkeyup="searchFunction()" id="authorSearchInput"></td>
+            </tr>
+    </tbody>
+  </table>      
+<br/>
+<br/>
+<br/>
+<%- include('./partials/messages.ejs'); %>
+
+<h3 class="mt-4">Resource</h3>
+<table class="table table-striped table-responsive" name="tableForLinks" id="LessonPlanTable">
+  <thead>
+    <tr>
+      <th scope="col" onclick="sortTable(0)">Title <i class="fa fa-fw fa-sort"></i></th>
+      <th scope="col" onclick="sortTable(1)">Category <i class="fa fa-fw fa-sort"></i></th>
+      <th scope="col" onclick="sortTable(2)">Date Created <i class="fa fa-fw fa-sort"></i></th>
+      <th scope="col" onclick="sortTable(3)">Time Created <i class="fa fa-fw fa-sort"></i></th>
+      <th scope="col" onclick="sortTable(4)">Author <i class="fa fa-fw fa-sort"></i></th>
+      <th scope="col" onclick="sortTable(5)">Author's Email <i class="fa fa-fw fa-sort"></i></th>
+      <th scope="col" onclick="sortTable(6)">Last Modified <i class="fa fa-fw fa-sort"></i></th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+      <% if(TheResources != null){ %>
+          <% for (var i = 0; i < TheResources.length; i++) { %>
+            <tr>
+                <td><%= TheResources[i].title  %></td>
+                <td><%= TheResources[i].category  %></td>
+                <td><%= TheResources[i].dateAndTimeCreated.toLocaleDateString()  %></td>
+                <td><%= TheResources[i].dateAndTimeCreated.toLocaleTimeString()  %></td>
+                <td><%= TheResources[i].author  %></td>
+                <td><%= TheResources[i].authorEmail  %></td>
+                <td><%= TheResources[i].lastModified.toLocaleString()  %></td>
+                <td>
+                <a href="/experience/readResource/<%= TheResources[i]._id %>" class="btn btn-primary"> Read Resource</a>
+                <a href="/experience/readResource/<%= TheResources[i]._id %>/edit" class="btn btn-info mt-2"><i class="fas fa-edit"></i>
+                        Edit</a>
+                <a href="/experience/<%= TheResources[i]._id %>/delete" class="btn btn-danger mt-2"
+                  onclick="return confirm('Are you sure to delete this record ?');" name="deleteBtn">
+                  <i class="fas fa-trash-alt"></i> Delete</a>
+                </td>
+            </tr>
+          <% } %>
+      <% } %>
+  </tbody>
+</table>
+  
+  <script>
+ $(document).ready(function () {
+            var deleteBtnItems = $('a[name$="deleteBtn"]').length;
+            var indexFordeleteBtn = 0;
+            do {
+                var deleteBtnThatBelongsThere = $('a[name$="deleteBtn"]').eq(indexFordeleteBtn);
+                indexFordeleteBtn++;
+                deleteBtnThatBelongsThere.attr("id", "deleteBtn" + indexFordeleteBtn);
+            } while (indexFordeleteBtn < deleteBtnItems);
+        });
+        
+  function checkeverytime() {
+            var deleteBtnItems = $('a[name$="deleteBtn"]').length;
+            var indexFordeleteBtn = 0;
+            do {
+                var deleteBtnThatBelongsThere = $('a[name$="deleteBtn"]').eq(indexFordeleteBtn);
+                indexFordeleteBtn++;
+                deleteBtnThatBelongsThere.attr("id", "deleteBtn" + indexFordeleteBtn);
+            } while (indexFordeleteBtn < deleteBtnItems);
+  };
+
+  function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("LessonPlanTable");
+    switching = true;
+    //Set the sorting direction to ascending:
+    dir = "asc"; 
+    /*Make a loop that will continue until
+    no switching has been done:*/
+    while (switching) {
+      //start by saying: no switching is done:
+      switching = false;
+      rows = table.rows;
+      /*Loop through all table rows (except the
+      first, which contains table headers):*/
+      for (i = 1; i < (rows.length - 1); i++) {
+        //start by saying there should be no switching:
+        shouldSwitch = false;
+        /*Get the two elements you want to compare,
+        one from current row and one from the next:*/
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        /*check if the two rows should switch place,
+        based on the direction, asc or desc:*/
+        if (dir == "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch= true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            //if so, mark as a switch and break the loop:
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+      if (shouldSwitch) {
+        /*If a switch has been marked, make the switch
+        and mark that a switch has been done:*/
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        //Each time a switch is done, increase this count by 1:
+        switchcount ++;      
+      } else {
+        /*If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again.*/
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }
+
+
+
+  function searchFunction() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  var inputtwo, filtertwo, tdtwo, txtValuetwo;
+  var inputthree, filterthree, tdthree, txtValuethree;
+
+  input = document.getElementById("titleSearchInput");
+  inputtwo = document.getElementById("categorySearchInput");
+  inputthree = document.getElementById("authorSearchInput");
+  filter = input.value.toUpperCase();
+  filtertwo = inputtwo.value.toUpperCase();
+  filterthree = inputthree.value.toUpperCase();
+  table = document.getElementById("LessonPlanTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    tdtwo = tr[i].getElementsByTagName("td")[1];
+    tdthree = tr[i].getElementsByTagName("td")[4];
+
+    if (td || tdtwo || tdthree) {
+      txtValue = td.textContent || td.innerText;
+      txtValuetwo = tdtwo.textContent || tdtwo.innerText;
+      txtValuethree = tdthree.textContent || tdthree.innerText;
+
+      if (txtValue.toUpperCase().indexOf(filter) > -1 && txtValuetwo.toUpperCase().indexOf(filtertwo) > -1 && txtValuethree.toUpperCase().indexOf(filterthree) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+
+  </script>
+  
+</body>
+</html>

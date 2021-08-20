@@ -1,0 +1,59 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+        <div class="card card-body">
+            <h1 class="text-center mb-3">
+                <i class="fas fa-user-plus"></i> Register
+            </h1>
+            <%- include('./partials/messages.ejs'); %>
+                <form action="/users/csvupload" method="POST" enctype="multipart/form-data">
+                       <p class="lead mt-4">Add users by CSV</p>
+                        <div>
+                            <label for="namelist">Select a CSV file:</label>
+                            <input type="file" name="namelist" accept=".csv">
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            Register Users in CSV
+                        </button>
+                        <br>   
+                        <p class="lead mt-4">Please format the CSV file as follows:</p>
+
+                        <table style="width: 100%; border: 1px solid black; border-collapse: collapse; text-align: center;">
+                            <tr style="border: 1px solid black;">
+                                <th style="border: 1px solid black;">Email</th>
+                                <th style="border: 1px solid black;">Name</th>
+                                
+                                <% if(LoginUser.email=="mobiusnyp@gmail.com" ){ %>
+                                    <th style="border: 1px solid black;">School</th>
+                                    <th style="border: 1px solid black;">Admin</th>
+                                <% } %>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td>...</td>
+                                <td>...</td>
+                                
+                                <% if(LoginUser.email=="mobiusnyp@gmail.com" ){ %>
+                                    <td>...</td>
+                                    <td>True</td>                                
+                                <% } %>
+                            </tr>
+                            <tr style="border: 1px solid black;">
+                                <td>...</td>
+                                <td>...</td>
+                                
+                                <% if(LoginUser.email=="mobiusnyp@gmail.com" ){ %>
+                                    <td>...</td>
+                                    <td>False</td>                                
+                                <% } %>
+                            </tr>
+                            
+
+                        </table>                    
+                    
+                </form>
+                
+                
+                <!-- <p class="lead mt-4">Have An Account? <a href="/users/login">Login</a></p> -->
+        </div>
+    </div>
+</div>

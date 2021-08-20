@@ -1,0 +1,79 @@
+<%- include('./partials/messages.ejs'); %>
+
+<!DOCTYPE html>
+<html lang="en">
+<title>Landing Page</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: "Lato", sans-serif;
+            text-align: center;
+        }
+        body {
+            overflow: hidden;
+        }
+        .w3-bar,
+        h1,
+        button {
+            font-family: "Montserrat", sans-serif;
+        }
+
+        .fa-anchor,
+        .fa-coffee {
+            font-size: 200px
+        }
+
+        img {
+            width: 200px;
+            height: 200px;
+        }
+
+        .content {
+            padding: 16px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
+        <div class="w3-content">
+
+            <div class="w3-half w3-center">
+                
+                <a href="/playbook">
+                    <img alt="Poster" src="/images/playbook.png">
+                </a>
+                <h1><a href="/playbook">Playbook</a></h1>
+            </div>
+            <div class="w3-half">
+                <a href="/experience">
+                    <img alt="Poster" src="/images/interact.png">
+                </a>
+                <h1><a href="/experience"> Experience</a></h1>
+                
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>W3.CSS Template</title>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: "Lato", sans-serif
+    }
+
+    body {
+      overflow: hidden;
+    }
+
+    .w3-bar,
+    h1,
+    button {
+      font-family: "Montserrat", sans-serif;
+      color: black;
+
+    }
+
+    .fa-anchor,
+    .fa-coffee {
+      font-size: 200px;
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .content {
+      padding: 16px;
+    }
+
+
+    #myBtn {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 30px;
+      z-index: 99;
+      font-size: 18px;
+      border: none;
+      outline: none;
+      background-color: teal;
+      color: white;
+      cursor: pointer;
+      padding: 15px;
+      border-radius: 4px;
+    }
+
+    #myBtn:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+  <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+  <!-- Bread Crumb -->
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/exLandingPage">Home</a></li>
+      <li class="breadcrumb-item"><a href="/playbook">PlayBook</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Glossary Of LXD Definations</li>
+    </ol>
+  </nav>
+
+
+  <!-- First Grid -->
+  <div class="w3-row-padding w3-padding-64 w3-container">
+    <div class="w3-content">
+      <!-- <div class="w3-twothird"> -->
+      <h1>Glossary Of LXD Definations</h1>
+    </div>
+  </div>
+  <div id="accordion">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h5 class="mb-0">
+          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+            aria-controls="collapseOne">
+            Achievable
+          </button>
+        </h5>
+      </div>
+      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="card-body">
+          <a href="https://www.merriam-webster.com/thesaurus/achievable">Attainable</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingTwo">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+            aria-controls="collapseTwo">
+            Capabilities
+          </button>
+        </h5>
+      </div>
+      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+        <div class="card-body">
+          Capabilities is the ability, knowledge or qualities to do things and achieve objectives, especially in
+          relation to an overall objective.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingThree">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
+            aria-expanded="false" aria-controls="collapseThree">
+            Case Studies
+          </button>
+        </h5>
+      </div>
+      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+        <div class="card-body">
+          A documented learning experience used for the purpose of analysis. A case study need not necessarily be an
+          exemplar
+          <a href="https://www.merriam-webster.com/dictionary/case%20study">Case Study</a>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="card">
+      <div class="card-header" id="headingFour">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour"
+            aria-expanded="false" aria-controls="collapseFour">
+            Collaboration
+          </button>
+        </h5>
+      </div>
+      <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+        <div class="card-body">
+          Collaboration is the process of group work. It is when a group of people come together and contribute their
+          expertise for the benefit of a shared outcome. How well the group members collaborate will greatly impact the
+          outcome of the group project.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingFive">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive"
+            aria-expanded="false" aria-controls="collapseFive">
+            Community of Practice
+          </button>
+        </h5>
+      </div>
+      <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+        <div class="card-body">
+          Community of practice (CoP) is a group of people who share a concern or a passion for something they do,
+          collaborate and communicate regularly in order to strengthen their network of knowledge.
+        </div>
+      </div>
+    </div>
+
+
+    <div class="card">
+      <div class="card-header" id="headingSix">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false"
+            aria-controls="collapseSix">
+            Contextual Application
+          </button>
+        </h5>
+      </div>
+      <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+        <div class="card-body">
+          Contextual learning is based on a <a
+            href="https://en.wikipedia.org/wiki/Constructivism_(learning_theory)">constructivist</a> theory of teaching
+          and learning. Learning takes place when
+          teachers are able to present information in such a way that students are able to construct meaning based on
+          their own experiences. Contextual learning experiences include <a
+            href="https://en.wikipedia.org/wiki/Intern">internships</a>, <a
+            href="https://en.wikipedia.org/wiki/Service_learning">service learning</a> and <a
+            href="https://en.wikipedia.org/wiki/Study_abroad">study abroad</a>
+          programs.
+        </div>
+      </div>
+    </div>
+
+
+    <div class="card">
+      <div class="card-header" id="headingSeven">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSeven"
+            aria-expanded="false" aria-controls="collapseSeven">
+            Effective
+          </button>
+        </h5>
+      </div>
+      <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
+        <div class="card-body">
+          Effective learning refers to activities designed to create positive, desired outcomes for learners– either as
+          part of a process or as an end result.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingEight">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseEight"
+            aria-expanded="false" aria-controls="collapseEight">
+            Engaging
+          </button>
+        </h5>
+      </div>
+      <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordion">
+        <div class="card-body">
+          Engaging Learning refers to an experience that appeals to learners by providing a platform for a thoughtful
+          exchange of ideas
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingNine">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseNine"
+            aria-expanded="false" aria-controls="collapseNine">
+            Exemplars
+          </button>
+        </h5>
+      </div>
+      <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordion">
+        <div class="card-body">
+          A documented learning experience that serves as a good model or good example of a learning experience designed
+          to be effective and engaging.
+          <a href=" https://www.merriam-webster.com/dictionary/exemplar">Exampler</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingTen">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTen" aria-expanded="false"
+            aria-controls="collapseTen">
+            Ideation
+          </button>
+        </h5>
+      </div>
+      <div id="collapseTen" class="collapse" aria-labelledby="headingTen" data-parent="#accordion">
+        <div class="card-body">
+          Ideation is the creative process of generating a broad set of ideas on a given topic expansively and without
+          constraints. To brainstorm as many fresh solutions as possible that uncover and explore new angles. <a
+            href="https://medium.com/@neemz/design-thinking-brainstorming-through-the-ideation-phase-4612b3cf723a">Ideation</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingEleven">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseEleven"
+            aria-expanded="false" aria-controls="collapseEleven">
+            Learner-Centric
+          </button>
+        </h5>
+      </div>
+      <div id="collapseEleven" class="collapse" aria-labelledby="headingEleven" data-parent="#accordion">
+        <div class="card-body">
+          The learner-centric approach places learners at the center of the learning experience and prepares them to be
+          primary agents of their learning . It considers the learners’ emotive, physical and social states and appeals
+          to their best interest. <a
+            href="https://education-reimagined.org/wp-content/uploads/2019/01/Vision_Website.pdf">Vision for
+            education</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingTwelve">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwelve"
+            aria-expanded="false" aria-controls="collapseTwelve">
+            Learning Experience
+          </button>
+        </h5>
+      </div>
+      <div id="collapseTwelve" class="collapse" aria-labelledby="headingTwelve" data-parent="#accordion">
+        <div class="card-body">
+          Learning experience can be any interaction, activity, lesson, module, course, or other experience of lessons
+          in which learning takes place. Learning encounters can include traditional face-to-face interaction and
+          non-traditional formats such as online learning. <a
+            href="https://www.edglossary.org/learning-experience/">Learning experience</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingThirteen">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThirteen"
+            aria-expanded="false" aria-controls="collapseThirteen">
+            Learning Experience Design (LXD)
+          </button>
+        </h5>
+      </div>
+      <div id="collapseThirteen" class="collapse" aria-labelledby="headingThirteen" data-parent="#accordion">
+        <div class="card-body">
+          LXD is the creation of Meaningful, Motivational and Memorable learning experiences that address the needs of
+          learners and achieve the Learning Outcomes.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingFourteen">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFourteen"
+            aria-expanded="false" aria-controls="collapseFourteen">
+            Learning Outcomes
+          </button>
+        </h5>
+      </div>
+      <div id="collapseFourteen" class="collapse" aria-labelledby="headingFourteen" data-parent="#accordion">
+        <div class="card-body">
+          Learning outcomes describe the knowledge, skills and the application of the knowledge and skills a person has
+          acquired and is able to demonstrate as a result of learning.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingFifteen">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFifteen"
+            aria-expanded="false" aria-controls="collapseFifteen">
+            Learning Evaluation
+          </button>
+        </h5>
+      </div>
+      <div id="collapseFifteen" class="collapse" aria-labelledby="headingFifteen" data-parent="#accordion">
+        <div class="card-body">
+          A process and method to appraise the learners by analyzing and evaluating the results of training and
+          educational programs. It takes into account any style of training, both informal or formal, to determine
+          aptitude of learners. <br>
+          <a
+            href="https://www.yourarticlelibrary.com/statistics-2/evaluation-in-teaching-and-learning-process-education/92476">Evaluation
+            in teaching and learning process</a> <br>
+          <a href="https://educationaltechnology.net/kirkpatrick-model-four-levels-learning-evaluation/">4 levels of
+            learning evaluation</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingSixteen">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSixteen"
+            aria-expanded="false" aria-controls="collapseSixteen">
+            Meaningful
+          </button>
+        </h5>
+      </div>
+      <div id="collapseSixteen" class="collapse" aria-labelledby="headingSixteen" data-parent="#accordion">
+        <div class="card-body">
+          A meaningful learning experience empowers learners to immediately see the relevance of the content they are
+          learning and the benefit they gain from it. It appeals to the learner’s prior knowledge and applies to their
+          learning context.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingSeventeen">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSeventeen"
+            aria-expanded="false" aria-controls="collapseSeventeen">
+            Memorable
+          </button>
+        </h5>
+      </div>
+      <div id="collapseSeventeen" class="collapse" aria-labelledby="headingSeventeen" data-parent="#accordion">
+        <div class="card-body">
+          A memorable learning experience engages the learners' emotion and makes lasting impression in learners. They
+          usually involve the learners to think about and practice what they have learnt.
+          <a href="https://www.shiftelearning.com/blog/bid/305719/The-3-Big-M-s-of-Successful-eLearning-Courses">3 Big
+            M’s of Successful eLearning Courses</a>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingEighteen">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseEighteen"
+            aria-expanded="false" aria-controls="collapseEighteen">
+            Method
+          </button>
+        </h5>
+      </div>
+      <div id="collapseEighteen" class="collapse" aria-labelledby="headingEighteen" data-parent="#accordion">
+        <div class="card-body">
+          Method is simply the tool or procedures used to achieve a desired outcome, for example, FGDs, statistical
+          tests etc.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingNineteen">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseNineteen"
+            aria-expanded="false" aria-controls="collapseNineteen">
+            Methodology
+          </button>
+        </h5>
+      </div>
+      <div id="collapseNineteen" class="collapse" aria-labelledby="headingNineteen" data-parent="#accordion">
+        <div class="card-body">
+          Methodology is a system of methods followed consistently. It comprises of the body of methods and principles
+          associated with a branch of knowledge.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" id="headingTwenty">
+        <h5 class="mb-0">
+          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwenty"
+            aria-expanded="false" aria-controls="collapseTwenty">
+            Motivational
+          </button>
+        </h5>
+      </div>
+      <div id="collapseTwenty" class="collapse" aria-labelledby="headingTwenty" data-parent="#accordion">
+        <div class="card-body">
+          Motivation is a condition that activates and sustains behavior toward a goal. <br>
+          <a href="https://www.nap.edu/read/24783/chapter/8#110">How People Learn</a><br>
+          <a href="https://wglasser.com/quickstart-guide-to-choice-theory/#basic-needs">Quickstart Guide to Choice
+            Theory</a><br>
+          <a href="https://www.learning-theories.com/kellers-arcs-model-of-motivational-design.html">ARCS Model Of
+            Motivational Design Theories</a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <div class="w3-container w3-black  w3-opacity w3-padding-64" id="Annex">
+    <h1 class="w3-margin w3-xlarge">Annexes</h1>
+    <h5 class="w3-padding-15">
+      <ul>
+        <li>
+          <a href="/annex_EETL" style="color: white;">
+            Annex A : NYP EETL Model
+          </a>
+
+        </li>
+        <li>
+          <a href="/annex_glossary" style="color: white;"">
+                        Annex B : Glossary Of LXD Definations
+                    </a>
+
+                </li>
+                <li>
+                    <a href=" /annex_micro_strat" style="color: white;"">
+                        Annex C : Micro Strategies of LXD Framework
+                    </a>
+
+                </li>
+            </ul>
+        </h5>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class=" w3-container w3-padding-64 w3-center w3-opacity">
+            <div class="w3-xlarge w3-padding-32">
+              <i class="fa fa-facebook-official w3-hover-opacity"></i>
+              <i class="fa fa-instagram w3-hover-opacity"></i>
+              <i class="fa fa-snapchat w3-hover-opacity"></i>
+              <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+              <i class="fa fa-twitter w3-hover-opacity"></i>
+              <i class="fa fa-linkedin w3-hover-opacity"></i>
+            </div>
+            <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a>
+            </p>
+            </footer>
+
+            <script>
+              // Used to toggle the menu on small screens when clicking on the menu button
+              function myFunction() {
+                var x = document.getElementById("navDemo");
+                if (x.className.indexOf("w3-show") == -1) {
+                  x.className += " w3-show";
+                } else {
+                  x.className = x.className.replace(" w3-show", "");
+                }
+              }
+
+              // When the user scrolls the page, execute myFunction
+              window.onscroll = function () { scrollFunction() };
+
+              // Get the button
+              var mybutton = document.getElementById("myBtn");
+
+              function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                  mybutton.style.display = "block";
+                } else {
+                  mybutton.style.display = "none";
+                }
+              }
+
+              function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+              }
+            </script>
+
+</body>
+
+</html>

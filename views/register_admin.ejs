@@ -1,0 +1,70 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+        <div class="card card-body">
+            <h1 class="text-center mb-3">
+                <i class="fas fa-user-plus"></i> Register
+            </h1>
+            <%- include('./partials/messages.ejs'); %>
+                <form action="/users/register_admin" method="POST">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name"
+                         />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email"
+                            value="<%= typeof email != 'undefined' ? email : '' %>" />
+                    </div>
+                    <% if(LoginUser.email!="mobiusnyp@gmail.com" ){ %>
+                        <div class="form-group">
+                            <label for="school">School</label>
+                            <input type="text" id="school" name="school" class="form-control" value=<%=LoginUser.school
+                                %> readonly />
+                        </div>
+                        <% } %>
+                            <!-- <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control"
+                        placeholder="Create Password" value="<%= typeof password != 'undefined' ? password : '' %>" />
+                </div>
+                <div class="form-group">
+                    <label for="password2">Confirm Password</label>
+                    <input type="password" id="password2" name="password2" class="form-control"
+                        placeholder="Confirm Password"
+                        value="<%= typeof password2 != 'undefined' ? password2 : '' %>" />
+                </div> -->
+                            <% if(LoginUser.email=="mobiusnyp@gmail.com" ){ %>
+                                <div class="form-group">
+                                    <label for="school_admin">School</label>
+                                    <input type="text" id="school_admin" name="school_admin" class="form-control"
+                                        placeholder="Enter school"
+                                        value="<%= typeof school != 'undefined' ? school : '' %>" />
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="admin" name="admin" value="admin">
+                                    <label for="admin">Admin</label><br>
+                                </div>
+
+                                <% } %>
+                                    <button type="submit" class="btn btn-primary btn-block">
+                                        Register
+                                    </button>
+                                    <br>
+                                    <div>
+                                        <p class="lead mt-4"><a href="/users/csvupload">Register users by CSV</a></p>
+                                        <br>
+                                    </div>
+
+
+                                    <!-- <p class="lead mt-4">Add users by CSV</p>
+                        <div>
+                            <label for="csv">Select a CSV file:</label>
+                            <input type="file" id="csv" name="csv">
+                        </div> -->
+
+                </form>
+
+        </div>
+    </div>
+</div>

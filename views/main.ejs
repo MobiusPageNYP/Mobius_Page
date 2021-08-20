@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Mobius Application</title>
+    <style>
+        .sidenav {
+            height: 100%;
+            width: 160px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #33ccff;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+
+        .sidenav a {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+
+        .backBtn{
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div class="sidenav">
+        <h1 class="ml-4"><%= name %></h1>
+        <a href="/users/logout" class="btn btn-secondary">Logout</a>
+    </div> -->
+    <h1 class="mt-4">Experience
+        <h3>Lesson Plans</h3>
+        <div class="backBtn">
+                <a href="/exLandingPage" class="btn btn-primary">Back</a>
+        </div>
+        </h1>
+    <br/>
+    <br/>
+    <br/>
+        <nav class="nav nav-pills flex-column flex-sm-row w3-light-grey">
+            <a class="flex-sm-fill text-sm-center nav-link" href="/experience">Repository</a>
+            <a class="flex-sm-fill text-sm-center nav-link active" href="/home">Lesson Plans</a>
+        </nav>
+    <br/>
+    <h1 class="mt-4">Modules</h1>
+    <div>
+        <form action="/home" method="GET">
+            <div class="form-group">
+                <input type="text" name="search" placeholder="Search for modules..." class="form-control">
+                <button type="submit" class="btn btn-primary mt-2">Search</button>
+            </div>
+        </form>
+    </div>
+    <%- include('./partials/messages.ejs'); %>
+
+    <a href="/home/new-module" class="btn btn-success mt-4">New Module</a>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th scope="col">Module Code</th>
+                <th scope="col">Module Name</th>
+                <th scope="col">Module School</th>
+                <th scope="col">Date Created</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%if (records.length >0){ %>
+            <% records.forEach(function(row){ %>
+            <tr>
+                <td><%= row.moduleCode %></td>
+                <td><%= row.moduleName %></td>
+                <td><%= row.moduleSchool %></td>
+                <td><%= row.date.toLocaleDateString() %></td>
+                <td><a href="/home/<%= row._id %>" class="btn btn-primary"> Find Lesson Plans</a>
+                    <a href="/home/<%= row._id %>/edit" class="btn btn-info btn-xs"><i class="fas fa-edit"></i> Edit</a>
+                    <% if (admin) { %>
+                    <a href="/home/<%= row._id %>/delete" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete this record ?');"><i class="fas fa-trash-alt"></i> Delete</a>
+                    <% } %>
+                </td>
+            </tr>
+            <% })} else { %>
+            <tr>
+                <td colspan="6">No record found</td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+    
+</body>
+
+</html>

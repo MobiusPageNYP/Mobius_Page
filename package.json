@@ -1,0 +1,43 @@
+{
+  "name": "node_passport_login",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.2.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
+    "csv-parser": "^3.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0",
+    "express-fileupload": "^1.2.1",
+    "express-session": "^1.17.1",
+    "html-to-pdfmake": "^2.1.7",
+    "jquery": "^3.6.0",
+    "jsdom": "^16.5.3",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.12.5",
+    "multer": "^1.4.2",
+    "node.js": "0.0.1-security",
+    "nodemailer": "^6.5.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^6.1.0",
+    "pdfmake": "^0.1.71",
+    "puppeteer": "^5.5.0",
+    "term-size": "^2.2.1",
+    "tinymce": "^5.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Mobius Page</title>
+    <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="semantic/dist/semantic.min.js"></script>
+</head>
+
+<body>
+    <div class="row mt-5">
+        <div class="col-md-6 m-auto">
+            <div class="card card-body">
+                <h1 class="text-center mb-3"><i class="fas fa-user-plus"></i> New Module</h1>
+                <%- include('./partials/messages.ejs'); %>
+                    <form action="/home/new-module" method="POST">
+                        <%- include('_forms_fields.ejs') %>
+                    </form>
+            </div>
+            
+        </div>
+    </div>
+
+    <script></script>
+</body>
+
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mobius Application</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <style>
+        .sidenav {
+            height: 100%;
+            width: 160px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #33ccff;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+
+        .sidenav a {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+
+        .backBtn{
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div class="sidenav">
+        <h1 class="ml-4"><%= name %></h1>
+        <a href="/home" class="ml-2">Modules</a>
+        <a href="/users/logout" class="btn btn-secondary">Logout</a>
+    </div> -->
+
+    <h1 class="mt-4">Experience
+        <h3>Lesson Plans</h3>
+        <div class="backBtn">
+                <a href="/home" class="btn btn-primary">Back</a>
+        </div>
+        </h1>
+    <br/>
+    <br/>
+    <br/>
+        <nav class="nav nav-pills flex-column flex-sm-row">
+            <a class="flex-sm-fill text-sm-center nav-link" href="/experience">Repository</a>
+            <a class="flex-sm-fill text-sm-center nav-link active" href="/home">Lesson Plans</a>
+        </nav>
+    <br/>
+
+    <h1 class="mt-4"><%= thatModule.moduleCode %></h1>
+    <h2 class="mt-4"><%= thatModule.moduleName %></h2>
+    <div>
+        <form action="/home/<%= thatModule._id %>" method="GET">
+            <div class="form-group">
+                <input type="text" name="search" placeholder="Search for lesson plans..." class="form-control">
+                <button type="submit" class="btn btn-primary mt-2">Search</button>
+            </div>
+        </form>
+    </div>
+    <form action="/home/<%= thatModule._id %>" method="POST">
+        <div id="displayDataFromJSON"> 
+            <input id="nameOfJSONFile" name="jsonFileSubmitted" type="file" class="mt-4" accept=".json">
+            <button disabled id="btnForUploadFile" type="submit" class="btn btn-info"
+                style="display: inline-block;">Upload</button>
+        </div>
+    </form>
+    <a href="/home/<%= thatModule._id %>/new-lessonplan" class="btn btn-success mt-4" style="display: table;">New Lesson
+        Plan</a>
+        <br>
+    <%- include('./partials/messages.ejs'); %>
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th scope="col">Topic of Lesson</th>
+                <th scope="col">Name of Lesson Plan</th>
+                <th scope="col">Date Created</th>
+                <th scope="col">Time Created</th>
+                <th scope="col">Author</th>
+                <th scope="col">Author Email</th>
+                <th scope="col">Commit Messages</th>
+                <th scope="col">Last Modified</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%if (thatLessonPlan.length > 0) {%>
+            <% thatLessonPlan.forEach(function(row){ %>
+            <tr>
+                <td><%= row.topicOfLesson %></td>
+                <td><%= row.nameOfLessonPlan %></td>
+                <td><%= row.dateAndTimeCreated.toLocaleDateString() %></td>
+                <td><%= row.dateAndTimeCreated.toLocaleTimeString() %></td>
+                <td><%= row.author %></td>
+                <td><%= row.authorEmail %></td>
+                <td><%= row.commitMsg %></td>
+                <td><%= row.lastModified.toLocaleString() %></td>
+                <td>
+                    <a href="/home/module/<%= row._id %>" class="btn btn-primary"> Read Lesson Plan</a>
+                    <% if (LoginUserEmail == row.authorEmail) { %>
+                        <a href="/home/module/<%= row._id %>/edit" class="btn btn-info mt-2"><i class="fas fa-edit"></i>
+                            Edit</a>
+                        <a href="/home/module/<%= row._id %>/delete" class="btn btn-danger mt-2"
+                            onclick="return confirm('Are you sure to delete this record ?');"><i
+                                class="fas fa-trash-alt"></i> Delete</a>
+                    <% } %>
+                    <% if (LoginUserEmail != row.authorEmail) { %>
+                        <a href="/home/module/<%= row._id %>/edit" class="btn btn-info mt-2"><i class="fas fa-edit"></i>
+                            Duplicate</a>
+                        <% } %>
+
+                </td>
+            </tr>
+            <% })} else { %>
+            <tr>
+                <td colspan="6">No record found</td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+    <!-- <button title="Use this button to save your contents into a json file" type="button" class="btn btn-primary mt-2 ml-3" onclick="saveToJSON()"><i class="fas fa-download"></i> Download</button> -->
+
+    <!-- <script>
+        $(document).ready(function() {
+            var details = JSON.parse(thatLessonPlan);
+            if(details.length > 0) {
+                details.array.forEach(element => {
+                    console.log(element)
+                });
+            }
+            // for(var i = 0; i < details.headerForNotesName.length; i++) {
+            //     console.log(details.headerForNotesName[i])
+            // }
+        });
+    </script> -->
+
+    <script>
+        $(document).ready(function () {
+            $('input:file').change(function () {
+                if ($(this).val()) {
+                    $('#btnForUploadFile').attr("disabled", false);
+                    var file = document.getElementById('nameOfJSONFile').files[0];
+                    var reader = new FileReader();
+                    reader.readAsText(file, 'UTF-8');
+                    reader.onload = function(evt) {
+                        var contentInsideJSON = JSON.parse(evt.target.result);
+
+                        // author
+                        $('#displayDataFromJSON').append("<textarea name='authorBox' id='authorInsideJSON' style='display: none'></textarea>");
+                        document.getElementById('authorInsideJSON').innerHTML = contentInsideJSON.author;
+                        
+                        // author email
+                        $('#displayDataFromJSON').append("<textarea name='authorEmailBox' id='authorEmailInsideJSON' style='display: none'></textarea>");
+                        document.getElementById('authorEmailInsideJSON').innerHTML = contentInsideJSON.authorEmail;
+
+                        // module code
+                        $('#displayDataFromJSON').append("<textarea name='moduleCodeBox' id='moduleCodeInsideJSON' style='display: none'></textarea>");
+                        document.getElementById('moduleCodeInsideJSON').innerHTML = contentInsideJSON.theModuleCode;
+
+                        // date and time created
+                        $('#displayDataFromJSON').append("<textarea name='dateAndTimeCreatedBox' id='dateAndTimeCreatedInsideJSON' style='display: none'></textarea>");
+                        document.getElementById('dateAndTimeCreatedInsideJSON').innerHTML = contentInsideJSON.dateAndTimeCreated;
+
+                        // header for notes name
+                        // $('#displayDataFromJSON').append("<textarea name='notesHeaderBox' id='notesHeaderInsideJSON' style='display: none'></textarea>");
+                        // document.getElementById('notesHeaderInsideJSON').innerHTML = contentInsideJSON.headerForNotesName;
+                        for(indexForNotesHeader = 0; indexForNotesHeader < contentInsideJSON.headerForNotesName.length; indexForNotesHeader++) {
+                            $('#displayDataFromJSON').append("<textarea name='notesHeaderBox' id='notesHeaderInsideJSON" + indexForNotesHeader + "' style='display: none'></textarea>");
+                            document.getElementById('notesHeaderInsideJSON' + indexForNotesHeader).innerHTML = contentInsideJSON.headerForNotesName[indexForNotesHeader];
+                        }
+
+                        // color picker for notes
+                        // $('#displayDataFromJSON').append("<textarea name='notesColorPickerBox' id='notesColorPickerInsideJSON' style='display: none'></textarea>");
+                        // document.getElementById('notesColorPickerInsideJSON').innerHTML = contentInsideJSON.colorPickerForNotes;
+                        for(indexForNotesColorPicker = 0; indexForNotesColorPicker < contentInsideJSON.colorPickerForNotes.length; indexForNotesColorPicker++) {
+                            $('#displayDataFromJSON').append("<textarea name='notesColorPickerBox' id='notesColorPickerInsideJSON" + indexForNotesColorPicker + "' style='display: none'></textarea>");
+                            document.getElementById('notesColorPickerInsideJSON' + indexForNotesColorPicker).innerHTML = contentInsideJSON.colorPickerForNotes[indexForNotesColorPicker];
+                        }
+
+                        // go text area
+                        // $('#displayDataFromJSON').append("<textarea name='notesTextAreaBox' id='notesTextAreaInsideJSON' style='display: none'></textarea>");
+                        // document.getElementById('notesTextAreaInsideJSON').innerHTML = contentInsideJSON.goTextArea;     
+                        for(indexForNotesTextArea = 0; indexForNotesTextArea < contentInsideJSON.goTextArea.length; indexForNotesTextArea++) {
+                            $('#displayDataFromJSON').append("<textarea name='notesTextAreaBox' id='notesTextAreaInsideJSON" + indexForNotesTextArea + "' style='display: none'></textarea>");
+                            document.getElementById('notesTextAreaInsideJSON' + indexForNotesTextArea).innerHTML = contentInsideJSON.goTextArea[indexForNotesTextArea];
+                        }
+
+                        // header for event name
+                        // $('#displayDataFromJSON').append("<textarea name='eventHeaderBox' id='eventHeaderInsideJSON' style='display: none'></textarea>");
+                        // document.getElementById('eventHeaderInsideJSON').innerHTML = contentInsideJSON.headerForEventName;  
+                        for(indexForEventHeader = 0; indexForEventHeader < contentInsideJSON.headerForEventName.length; indexForEventHeader++) {
+                            $('#displayDataFromJSON').append("<textarea name='eventHeaderBox' id='eventHeaderInsideJSON" + indexForEventHeader +"' style='display: none'></textarea>");
+                            document.getElementById('eventHeaderInsideJSON' + indexForEventHeader).innerHTML = contentInsideJSON.headerForEventName[indexForEventHeader];
+                        }
+
+                        // text area for event
+                        // $('#displayDataFromJSON').append("<textarea name='eventTextAreaBox' id='eventTextAreaInsideJSON' style='display: none'></textarea>");
+                        // document.getElementById('eventTextAreaInsideJSON').innerHTML = contentInsideJSON.textAreasForEvents;  
+                        for(indexForEventTextArea = 0; indexForEventTextArea < contentInsideJSON.textAreasForEvents.length; indexForEventTextArea++) {
+                            $('#displayDataFromJSON').append("<textarea name='eventTextAreaBox' id='eventTextAreaInsideJSON" + indexForEventTextArea + "' style='display: none'></textarea>");
+                            document.getElementById('eventTextAreaInsideJSON' + indexForEventTextArea).innerHTML = contentInsideJSON.textAreasForEvents[indexForEventTextArea];
+                        }
+
+                        // color picker for event
+                        // $('#displayDataFromJSON').append("<textarea name='eventColorPickerBox' id='eventColorPickerInsideJSON' style='display: none'></textarea>");
+                        // document.getElementById('eventColorPickerInsideJSON').innerHTML = contentInsideJSON.colorPickerForEvent;
+                        for(indexForEventColorPicker = 0; indexForEventColorPicker < contentInsideJSON.colorPickerForEvent.length; indexForEventColorPicker++) {
+                            $('#displayDataFromJSON').append("<textarea name='eventColorPickerBox' id='eventColorPickerInsideJSON" + indexForEventColorPicker + "' style='display: none'></textarea>");
+                            document.getElementById('eventColorPickerInsideJSON' + indexForEventColorPicker).innerHTML = contentInsideJSON.colorPickerForEvent[indexForEventColorPicker];
+                        }
+
+                        // go duration
+                        // $('#displayDataFromJSON').append("<textarea name='durationBox' id='goDurationInsideJSON' style='display: none'></textarea>");
+                        // document.getElementById('goDurationInsideJSON').innerHTML = contentInsideJSON.goDuration;
+                        for(indexForEventDuration = 0; indexForEventDuration < contentInsideJSON.goDuration.length; indexForEventDuration++) {
+                            $('#displayDataFromJSON').append("<textarea name='durationBox' id='goDurationInsideJSON" + indexForEventDuration + "' style='display: none'></textarea>");
+                            document.getElementById('goDurationInsideJSON' + indexForEventDuration).innerHTML = contentInsideJSON.goDuration[indexForEventDuration];
+                        }
+
+                        // go minutes
+                        // $('#displayDataFromJSON').append("<textarea name='minutesBox' id='goMinutesInsideJSON' style='display: none'></textarea>");
+                        // document.getElementById('goMinutesInsideJSON').innerHTML = contentInsideJSON.goMinutes;
+                        for(indexForEventMinutes = 0; indexForEventMinutes < contentInsideJSON.goMinutes.length; indexForEventMinutes++) {
+                            $('#displayDataFromJSON').append("<textarea name='minutesBox' id='goMinutesInsideJSON" + indexForEventMinutes + "' style='display: none'></textarea>");
+                            document.getElementById('goMinutesInsideJSON' + indexForEventMinutes).innerHTML = contentInsideJSON.goMinutes[indexForEventMinutes];
+                        }
+
+                        // go time
+                        // $('#displayDataFromJSON').append("<textarea name='timeBox' id='goTimeInsideJSON' style='display: none'></textarea>");
+                        // document.getElementById('goTimeInsideJSON').innerHTML = contentInsideJSON.goTime;
+                        for(indexForEventTime = 0; indexForEventTime < contentInsideJSON.goTime.length; indexForEventTime++) {
+                            $('#displayDataFromJSON').append("<textarea name='timeBox' id='goTimeInsideJSON" + indexForEventTime + "' style='display: none'></textarea>");
+                            document.getElementById('goTimeInsideJSON' + indexForEventTime).innerHTML = contentInsideJSON.goTime[indexForEventTime];
+                        }
+
+                        // name of lesson plan
+                        $('#displayDataFromJSON').append("<textarea name='nameOfLessonPlanBox' id='nameOfLessonPlanInsideJSON' style='display: none'></textarea>");
+                        document.getElementById('nameOfLessonPlanInsideJSON').innerHTML = contentInsideJSON.nameOfLessonPlan;
+
+                        // commit message
+                        $('#displayDataFromJSON').append("<textarea name='commitMsgBox' id='commitMsgInsideJSON' style='display: none'></textarea>");
+                        document.getElementById('commitMsgInsideJSON').innerHTML = contentInsideJSON.commitMsg;
+
+                        // last modified
+                        $('#displayDataFromJSON').append("<textarea name='lastModifiedBox' id='lastModifiedInsideJSON' style='display: none'></textarea>");
+                        document.getElementById('lastModifiedInsideJSON').innerHTML = contentInsideJSON.lastModified;
+
+                        // Notes last modified by
+                        for(indexForNotesLastModifiedBy = 0; indexForNotesLastModifiedBy < contentInsideJSON.notesLastModifiedBy.length; indexForNotesLastModifiedBy++) {
+                            $('#displayDataFromJSON').append("<textarea name='notesLastModifiedByBox' id='notesLastModifiedByInsideJSON" + indexForNotesLastModifiedBy + "' style='display: none'></textarea>");
+                            document.getElementById('notesLastModifiedByInsideJSON' + indexForNotesLastModifiedBy).innerHTML = contentInsideJSON.notesLastModifiedBy[indexForNotesLastModifiedBy];
+                        }
+
+                        // Events last modified by
+                        for(indexForEventsLastModifiedBy = 0; indexForEventsLastModifiedBy < contentInsideJSON.eventsLastModifiedBy.length; indexForEventsLastModifiedBy++) {
+                            $('#displayDataFromJSON').append("<textarea name='eventsLastModifiedByBox' id='eventsLastModifiedByInsideJSON" + indexForEventsLastModifiedBy + "' style='display: none'></textarea>");
+                            document.getElementById('eventsLastModifiedByInsideJSON' + indexForEventsLastModifiedBy).innerHTML = contentInsideJSON.eventsLastModifiedBy[indexForEventsLastModifiedBy];
+                        }
+                    }
+                }
+                else {
+                    $('#btnForUploadFile').attr("disabled", true);
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

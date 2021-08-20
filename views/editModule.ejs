@@ -1,0 +1,30 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+        <div class="card card-body">
+            <h1 class="text-center mb-3"><i class="fas fa-edit"></i> Edit Module</h1>
+            <%- include('./partials/messages.ejs'); %>
+            <div class="form-group">
+                <label for="moduleCode"> Previous Module Code</label>
+                <input readonly type="text" id="moduleCode" name="moduleCode" class="form-control" placeholder="Enter Module Code" value="<%= particularModule.moduleCode %>" />
+            </div>
+            <div class="form-group">
+                <label for="moduleName">Previous Module Name</label>
+                <input readonly type="text" id="moduleName" name="moduleName" class="form-control"
+                    placeholder="Enter Module Name" value="<%= particularModule.moduleName %>" />
+            </div>
+            <form action="/home/<%= particularModule._id %>/edit" method="POST">
+                <div class="form-group">
+                    <label for="moduleCode">New Module Code</label>
+                    <input type="text" id="moduleCode" name="moduleCode" class="form-control" placeholder="Enter Module Code" value="<%= typeof moduleCode != 'undefined' ? moduleCode : '' %>" />
+                </div>
+                <div class="form-group">
+                    <label for="moduleName">New Module Name</label>
+                    <input type="text" id="moduleName" name="moduleName" class="form-control"
+                        placeholder="Enter Module Name" value="<%= typeof moduleName != 'undefined' ? moduleName : '' %>" />
+                </div>
+                <button type="submit" class="btn btn-primary btn-xs">Save</button>
+                <a href="/home" class="btn btn-secondary btn-xs">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

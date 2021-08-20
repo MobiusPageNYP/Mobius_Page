@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobius Application</title>
+    <!-- <script src="stylesheet\tinymce\tinymce.min.js"></script> -->
+    <script src="https://cdn.tiny.cloud/1/v73hdb8haytf20znc24j0223o64viyhlcpitocjqagu2p3o0/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <style>
+        .sidenav {
+            height: 100%;
+            width: 160px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #33ccff;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+
+        .sidenav a {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+
+        .flex-container {
+            margin-left: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            /* background-color: DodgerBlue; */
+        }
+
+        .flex-container>div {
+            background-color: #f1f1f1;
+            width: 500px;
+            height: 470px;
+            margin: 20px;
+            text-align: center;
+            line-height: 75px;
+            font-size: 30px;
+        }
+
+        #addNewNoteBtn {
+            position: absolute;
+            left: 47%;
+        }
+
+        p:empty:not(:focus)::before {
+            content: attr(data-placeholder);
+        }
+
+        h4:empty:not(:focus)::before {
+            content: attr(data-placeholder);
+        }
+
+        .notesTextArea {
+            height: 321px;
+        }
+
+        .timeline-article .meta-date .date {
+            font-size: 21px;
+            line-height: 20px;
+        }
+
+        /* .timeline-article .meta-date .month {
+            font-size: 12px;
+            line-height: 10px;
+        } */
+
+        .timeline-article .meta-date {
+            position: absolute;
+            top: 0;
+            left: 48.25%;
+            width: 95px;
+            height: 62px;
+            margin-left: -31px;
+            color: #fff;
+            border-radius: 15px;
+            background: #00b0bd;
+        }
+
+        /* .timeline-article .meta-date .date,
+        .timeline-article .meta-date .month {
+            display: block;
+            text-align: center;
+            font-weight: 900;
+            padding-top: 20px;
+        } */
+
+        /*===== Vertical Timeline =====*/
+        #conference-timeline {
+            position: relative;
+            max-width: 920px;
+            width: 100%;
+            margin: 0 auto;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
+        #conference-timeline .timeline-start,
+        #conference-timeline .timeline-end {
+            display: table;
+            font-family: "Roboto", sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            text-transform: uppercase;
+            background: #00b0bd;
+            padding: 15px 23px;
+            color: #fff;
+            max-width: 5%;
+            width: 100%;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        #conference-timeline .conference-center-line {
+            position: absolute;
+            width: 3px;
+            height: 100%;
+            top: 0;
+            left: 50%;
+            margin-left: -2px;
+            background: #00b0bd;
+            z-index: -1;
+        }
+
+        #conference-timeline .conference-timeline-content {
+            padding-top: 67px;
+            /* padding-bottom: 67px; */
+        }
+
+        .timeline-article {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .timeline-article .content-left-container,
+        .timeline-article .content-right-container {
+            max-width: 44%;
+            width: 100%;
+        }
+
+        .timeline-article .timeline-author {
+            display: block;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 24px;
+            color: #242424;
+            text-align: right;
+        }
+
+        .timeline-article .content-left,
+        .timeline-article .content-right {
+            position: relative;
+            width: auto;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .03);
+            padding: 27px 25px;
+        }
+
+        .timeline-article p {
+            margin: 0 0 0 60px;
+            padding: 0;
+            font-weight: 400;
+            color: #242424;
+            font-size: 14px;
+            line-height: 24px;
+            position: relative;
+        }
+
+        .timeline-article p span.article-number {
+            position: absolute;
+            font-weight: 300;
+            font-size: 44px;
+            top: 10px;
+            left: -60px;
+            color: #00b0bd;
+        }
+
+        .timeline-article .content-left-container {
+            float: left;
+        }
+
+        .timeline-article .content-right-container {
+            float: right;
+        }
+
+        .timeline-article .content-left:before,
+        .timeline-article .content-right:before {
+            position: absolute;
+            top: 20px;
+            font-size: 23px;
+            font-family: "FontAwesome";
+            color: #fff;
+        }
+
+        .timeline-article .content-left:before {
+            /* content: "\f0da"; */
+            right: -8px;
+        }
+
+        .timeline-article .content-right:before {
+            /* content: "\f0d9"; */
+            left: -8px;
+        }
+
+        .timeline-article .meta-date {
+            position: absolute;
+            top: 0;
+            left: 48.5%;
+            width: 90px;
+            height: 62px;
+            margin-left: -31px;
+            color: #fff;
+            border-radius: 25px;
+            background: #00b0bd;
+        }
+
+        .timeline-article .meta-date .date,
+        .timeline-article .meta-date .month {
+            display: block;
+            text-align: center;
+            font-weight: 900;
+            padding-top: 20px;
+        }
+
+        .timeline-article .meta-date .date {
+            font-size: 20px;
+            /* line-height: 40px; */
+        }
+
+        .timeline-article .meta-date .month {
+            font-size: 12px;
+            line-height: 10px;
+        }
+
+        /*===== // Vertical Timeline =====*/
+
+        /*===== Resonsive Vertical Timeline =====*/
+        @media only screen and (max-width: 830px) {
+
+            #conference-timeline .timeline-start,
+            #conference-timeline .timeline-end {
+                margin: 0;
+            }
+
+            #conference-timeline .conference-center-line {
+                margin-left: 0;
+                left: 50px;
+            }
+
+            .timeline-article .meta-date {
+                margin-left: 0;
+                left: 20px;
+            }
+
+            .timeline-article .content-left-container,
+            .timeline-article .content-right-container {
+                max-width: 100%;
+                width: auto;
+                float: none;
+                margin-left: 110px;
+                min-height: 53px;
+            }
+
+            .timeline-article .content-left-container {
+                margin-bottom: 20px;
+            }
+
+            .timeline-article .content-left,
+            .timeline-article .content-right {
+                padding: 10px 25px;
+                min-height: 65px;
+            }
+
+            .timeline-article .content-left:before {
+                content: "\f0d9";
+                right: auto;
+                left: -8px;
+            }
+
+            .timeline-article .content-right:before {
+                display: none;
+            }
+        }
+
+        @media only screen and (max-width: 400px) {
+            .timeline-article p {
+                margin: 0;
+            }
+
+            .timeline-article p span.article-number {
+                display: none;
+            }
+
+        }
+
+        /*===== // Resonsive Vertical Timeline =====*/
+
+        .labelForLastModifiedBy {
+            height: 50px;
+        }
+
+        .backBtn{
+            float: right;
+        }
+        .commentsLabel{
+            text-decoration: underline;
+            font-weight: bold;
+            font-size: xx-large;
+        }
+        .commentsInput{
+            width: 90%;
+            height: 60%;
+            font-size: large;
+            line-height: normal;
+        }
+        .commentsDivLeft{
+
+            border: blue;
+            border-style: solid;
+            border-width: 5px;
+            background-color: white;
+            width: 500px;
+            height: 470px;
+            margin: 20px;
+            text-align: center;
+            line-height: 75px;
+            font-size: 30px;
+        }
+        .commentsDivRight{
+            float: right;
+            width: 40%;
+            height: 500px;
+            border: red;
+            border-style: solid;
+            border-width: 5px;
+        }
+        .comment-container {
+            margin-left: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            /* background-color: DodgerBlue; */
+        }
+
+        .comment-container>div {
+            /* background-color: #f1f1f1; */
+            background-color: white;
+            width: 500px;
+            height: 470px;
+            margin: 20px;
+            text-align: center;
+            line-height: 75px;
+            font-size: 30px;
+        }
+        .commentsEditedBy{
+            height: 50px;
+            width: 250px;
+        }
+        .copyButtons{
+            float: right;
+        }
+    </style>
+</head>
+
+<body onclick="checkeverytime()">
+    <div class="sidenav" hidden>
+        <h1 id="authorName" class="ml-4"><%= name %></h1>
+        <h5 style="display: none;" id="authorEmail"><%= email %></h5>
+        <h5 style="display: none;" id="lessonPlanOriginalAuthor"><%= TheSelectedResource.authorEmail %></h5>
+        <h5 style="display: none;" id="creationDateAndTimeForLP"><%= TheSelectedResource.dateAndTimeCreated %></h5>
+        <a href="/home" class="ml-2">Modules</a> -->
+        <!-- <button title="Use this button to save your contents into a json file" type="button"
+            class="btn btn-primary mt-2 ml-3 mb-2" onclick="saveToJSON()"><i class="fas fa-download"></i>
+            Download</button> -->
+        <a href="/home/module/<%= TheSelectedResource._id %>/edit" style="background-color: greenyellow" >Edit Lesson Plan</a>
+        <a href="/users/logout" class="btn btn-secondary">Logout</a>
+    </div>
+<br/>
+    <div class="backBtn">
+        <br/>
+        <form action="/experience" method="GET">
+            <button type="submit" class="btn btn-primary">Back</button>
+        </form>
+        <br/>
+        <br/>
+        <!-- <button title="Use this button to save your contents into a json file" type="button"
+        class="btn btn-primary" onclick="saveToJSON()"><i class="fas fa-download"></i>
+        Download</button> -->
+    </div>
+
+    <!-- <form> -->
+        <h1>Resource - Read LXD Timeline</h1>
+        <h4 style="display: none;" id="lastModifiedDateAndTimeDisplayed"><%= TheSelectedResource.lastModified %></h4>
+        <h4>Title of Resource: &nbsp;<%= TheSelectedResource.title %></h4>
+        <h4>Category of Resource: &nbsp;<%= TheSelectedResource.category %></h4>
+        <br/>
+        <br/>
+
+        <div style="display: none;">
+            <label>For Duration</label>
+            <% for (var indexForDuration = 0; indexForDuration < TheSelectedResource.goDuration.length; indexForDuration++) { %>
+            <input class="displayDuration" value="<%= TheSelectedResource.goDuration[indexForDuration] %>">
+            <% } %>
+
+            <label>For Minutes</label>
+            <% for (var indexForMinutes = 0; indexForMinutes < TheSelectedResource.goMinutes.length; indexForMinutes++) { %>
+            <input class="displayMinutes" value="<%= TheSelectedResource.goMinutes[indexForMinutes] %>">
+            <% } %>
+
+            <label>For Time</label>
+            <% for (var indexForTime = 0; indexForTime < TheSelectedResource.goTime.length; indexForTime++) { %>
+            <input class="displayTime" value="<%= TheSelectedResource.goTime[indexForTime] %>">
+            <% } %>
+        </div>
+
+
+
+<% if(LoginUser.email==theLessonPlanToDisplay.authorEmail){ %>
+    <nav class="nav nav-pills flex-column flex-sm-row">
+        <a class="flex-sm-fill text-sm-center nav-link active"
+            href="/experience/readResource/<%= TheSelectedResource._id %>">Read LXD Timeline</a>
+        <a class="flex-sm-fill text-sm-center nav-link"
+            href="/experience/readResource/<%= TheSelectedResource._id %>/readResourceCards">Read LXD Notes</a>
+        <a class="flex-sm-fill text-sm-center nav-link"
+            href="/experience/readResource/<%= TheSelectedResource._id %>/edit">Edit LXD Timeline & LXD Notes</a>
+        <a class="flex-sm-fill text-sm-center nav-link"
+            href="/experience/readResource/<%= TheSelectedResource._id %>/generateResourcePDF">LXD Timeline & LXD Notes
+            Generation</a>
+    </nav>
+    <% } %>
+        <% if(LoginUser.email !=theLessonPlanToDisplay.authorEmail){ %>
+            <nav class="nav nav-pills flex-column flex-sm-row">
+                <a class="flex-sm-fill text-sm-center nav-link active"
+                    href="/experience/readResource/<%= TheSelectedResource._id %>">Read
+                    LXD Timeline</a>
+                <a class="flex-sm-fill text-sm-center nav-link"
+                    href="/experience/readResource/<%= TheSelectedResource._id %>/readResourceCards">Read LXD Notes</a>
+                <a class="flex-sm-fill text-sm-center nav-link"
+                    href="/experience/readResource/<%= TheSelectedResource._id %>/generateResourcePDF">LXD Timeline &
+                    LXD Notes
+                    Generation</a>
+            </nav>
+            <% } %>
+          <br/>
+          <button class="btn btn-primary" id="selectAllBtn">Select All</button>
+                <div class="copyButtons">
+                    <label id="copiedLbl" style="font-weight: bold;font-size: larger;"></label>
+                    &nbsp;
+                    <button class="btn btn-success" id="copyBtn">Copy</button>
+                    <br/>
+                    <br/>
+                    <button class="btn btn-secondary" id="clearBtn" style="float: right;">Clear Clipboard</button>
+                </div>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+
+       
+        <h1 style="text-align:center">LXD Timeline</h1>
+        <!-- Vertical Timeline -->
+        <section id="conference-timeline">
+            <div class="timeline-start">
+                <label>Start Time:</label>
+                       <br />
+                <input name="startTimeInput" id="startTimeInput" type="text" value="<%= TheSelectedResource.startTime %>" readonly style="cursor: not-allowed;" />
+               <!-- <input name="goTime" type="time" readonly style="cursor: not-allowed;" /> -->
+           </div>
+            <div class="conference-center-line"></div>
+            <div class="conference-timeline-content" id="containerBox">
+                <% for (var h = 0; h < TheSelectedResource.headerForEventName.length; ) { %>
+                <div class="timeline-article">
+                    <div class="content-left-container">
+                        <div class="content-left"
+                            style="background-color: <%= TheSelectedResource.colorPickerForEvent[h] %>">
+                            <input name='headerForEventName' placeholder="Title..." class="headerForEvent"
+                                value="<%= TheSelectedResource.headerForEventName[h] %>" readonly>
+                            <textarea contenteditable="true" style="height: 400px" name="textAreasForEvents"
+                                readonly><%= TheSelectedResource.textAreasForEvents[h] %></textarea>
+                            <input title="Use this button to change the color of the note" type='color'
+                                name="colorPickerForEvent" value="<%= TheSelectedResource.colorPickerForEvent[h] %>"
+                                readonly disabled />
+                            <label style="font-size: small;">Last Modified By:</label>
+                            <input readonly class="labelSetForLastModified" name="labelSetForLastModified"
+                                value="<%= TheSelectedResource.eventsLastModifiedBy[h] %>">
+                        </div>
+
+                        <label>Duration:</label><br />
+                        <input type="number" name="goDuration" style="width: 50px" min="0" max="23"
+                            readonly />&nbsp<label>hour(s)</label>&nbsp<input type="number" name="goMinutes"
+                            style="width: 50px" min="0" max="59" readonly />&nbsp<label>minute(s)</label>
+                        <br />
+                        
+                        <input name="goTime" type="time" hidden />
+
+                    </div>
+                    <% h++ %>
+                    <div class="content-right-container">
+                        <div class="content-right"
+                            style="background-color: <%= TheSelectedResource.colorPickerForEvent[h] %>">
+                            <!-- <h4 contenteditable="true" id="uniqueheaderForEvent2" class="headerForEvent"
+                                    data-placeholder="Title..."></h4> -->
+                            <input readonly name='headerForEventName' placeholder="Title..." class="headerForEvent"
+                                value="<%= TheSelectedResource.headerForEventName[h] %>">
+                            <textarea readonly style="height: 400px"
+                                name="textAreasForEvents"><%= TheSelectedResource.textAreasForEvents[h] %></textarea>
+
+                            <input readonly disabled title="Use this button to change the color of the note"
+                                type='color' name="colorPickerForEvent"
+                                value="<%= TheSelectedResource.colorPickerForEvent[h] %>" />
+                            <label style="font-size: small;">Last Modified By:</label>
+                            <input readonly class="labelSetForLastModified" name="labelSetForLastModified"
+                                value="<%= TheSelectedResource.eventsLastModifiedBy[h] %>">
+                        </div>
+                    </div>
+                    <% h++ %>
+                    <div class="meta-date">
+                        <span class="date">00:00</span>
+                        <input name="middleTimeHidden" value="00:00" hidden/>
+                    </div>
+                    <input type="checkbox" name="myCheckEvent" style="width: 18px; height: 18px; margin-top: 100px; margin-left: 45px;">
+
+                    
+                    <input disabled readonly title="Use this button to add an event" type="button" value="+"
+                        class="btn clever-btn btn-2" name="goButton"
+                        style="display: block; margin:auto; max-width: 300px; margin-top: 150px; background: #00b0bd; color: rgba(0, 0, 0, 0.50); font-size: xx-large; cursor: not-allowed;" />
+
+                </div>
+                <% } %>
+            </div>
+            <div class="timeline-end">Total duration
+                <!-- <span class="endTime">00:00</span> -->
+                <input class="endTime" type="text" readonly style="cursor: not-allowed;"  />
+            </div>
+            </section>
+
+    <!-- </form> -->
+
+    <!-- Modal -->
+<div id="ModalPopUpForDeletion">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="modal-bodyID">
+              <!-- delete msg here -->
+          </div>
+          <div class="modal-footer" id="modalfooter" name="modalfooter">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" name="ConfirmDeleteBtnInModal" id="ConfirmDeleteBtnInModal" class="btn btn-danger mt-2"> Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <script>
+
+        $(document).ready(function () {
+            var newscript = document.createElement('script');
+            var insidescript = document.createTextNode("tinymce.init({selector: 'textarea:not(.commentsInput)', readonly: 1, content_css: '//www.tiny.cloud/css/codepen.min.css', plugins: 'print preview searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap emoticons', toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment', image_title: true, automatic_uploads: true, file_picker_types: 'image', file_picker_callback: function (cb, value, meta) {var input = document.createElement('input'); input.setAttribute('type', 'file'); input.setAttribute('accept', 'image/*'); input.onchange = function () { var file = this.files[0]; var reader = new FileReader(); reader.onload = function () { var id = 'blobid' + (new Date()).getTime(); var blobCache = tinymce.activeEditor.editorUpload.blobCache; var base64 = reader.result.split(',')[1]; var blobInfo = blobCache.create(id, file, base64); blobCache.add(blobInfo); cb(blobInfo.blobUri(), { title: file.name }); }; reader.readAsDataURL(file); }; input.click();}});");
+            newscript.appendChild(insidescript);
+            $("textarea").append(newscript);
+
+            // All Notes related that has an id: 1) outer div, 2) header, 3) textarea, 4) colorpicker 5) delete button
+            var noOfDivForNC = $('.parent').length;
+            var indexForDivForNC = 0;
+            do {
+                var notesDivForNCThatBelongsThere = $('.parent').eq(indexForDivForNC);
+                var colorPickerThere = $('input[name$="colorPickerForNote"]').eq(indexForDivForNC);
+                indexForDivForNC++;
+                notesDivForNCThatBelongsThere.attr("id", "divForNC" + indexForDivForNC);
+                colorPickerThere.attr("id", "color" + indexForDivForNC);
+            } while (indexForDivForNC < noOfDivForNC);
+
+            var removeNotesBtnItems = $('button[name$="goRemoveNotes"]').length;
+            var indexForRemoveNotesBtn = 0;
+            do {
+                var deleteNoteBtnThatBelongsThere = $('button[name$="goRemoveNotes"]').eq(indexForRemoveNotesBtn);
+                indexForRemoveNotesBtn++;
+                deleteNoteBtnThatBelongsThere.attr("id", "removeBtn" + indexForRemoveNotesBtn);
+            } while (indexForRemoveNotesBtn < removeNotesBtnItems);
+
+            var noOfTextAreaForNotes = $('textarea[name$="goTextArea"]').length;
+            var indexForTextAreaForNotes = 0;
+            do {
+                var textAreaForNotesThatBelongsThere = $('textarea[name$="goTextArea"]').eq(indexForTextAreaForNotes);
+                indexForTextAreaForNotes++;
+                textAreaForNotesThatBelongsThere.attr("id", "textArea" + indexForTextAreaForNotes);
+            } while (indexForTextAreaForNotes < noOfTextAreaForNotes);
+
+            var noOfHeadersForNotes = $('.headersNotes').length;
+            var indexForHeaderForNotes = 0;
+            do {
+                var headersForNotesThatBelongsThere = $('.headersNotes').eq(indexForHeaderForNotes);
+                indexForHeaderForNotes++;
+                headersForNotesThatBelongsThere.attr("id", "headerForNotes" + indexForHeaderForNotes);
+            } while (indexForHeaderForNotes < noOfHeadersForNotes);
+            //Notes end
+
+
+            
+
+
+
+
+            // All Event related that has an id: 1) colorPicker, 2) Hour/Duration, 3) Minutes, 4) Start Time, 5) Add Event, 6) Remove Event, 7) timeline-article, 8) content-left, 9) textarea, 10) content-right, 11) headerForEvent, 12) span Circle
+            var durationItem = $('input[name$="goDuration"]').length;
+            var i = 0;
+            do {
+                var durationInputThatBelongsThere = $('input[name$="goDuration"]').eq(i);
+                var circleSpanThatBelongsThere = $('.date').eq(i)
+                var circleInputHidden = $('input[name="middleTimeHidden"]').eq(i)
+                i++;
+                durationInputThatBelongsThere.attr("id", "addDurationInput" + i);
+                circleSpanThatBelongsThere.attr("id", "circleForEvent" + i);
+                circleInputHidden.attr("id", "middleTimeHidden" + i);
+            } while (i < durationItem);
+
+            var minutesItem = $('input[name$="goMinutes"]').length;
+            var j = 0;
+            do {
+                var minutesInputThatBelongsThere = $('input[name$="goMinutes"]').eq(j);
+                j++;
+                minutesInputThatBelongsThere.attr("id", "addMinutesInput" + j);
+            } while (j < minutesItem);
+
+            var startTimeItem = $('input[name$="goTime"]').length;
+            var b = 0;
+            do {
+                var startTimeInputThatBelongsThere = $('input[name$="goTime"]').eq(b);
+                b++;
+                startTimeInputThatBelongsThere.attr("id", "inputForStartTime" + b);
+            } while (b < startTimeItem);
+
+            var addEventBtnItem = $('input[name$="goButton"]').length;
+            var x = 0;
+            do {
+                var eventBtnThatBelongsThere = $('input[name$="goButton"]').eq(x);
+                x++;
+                eventBtnThatBelongsThere.attr("id", "addEventBtn" + x);
+            } while (x < addEventBtnItem);
+
+            var removeEventBtnItem = $('button[name$="goRemoveEvents"]').length;
+            var y = 0;
+            do {
+                var deleteBtnThatBelongsThere = $('button[name$="goRemoveEvents"]').eq(y);
+                y++;
+                deleteBtnThatBelongsThere.attr("id", "removeEventBtn" + y);
+            } while (y < removeEventBtnItem);
+
+            var noOfTimeLine = $('.timeline-article').length;
+            var z = 0;
+            do {
+                var eventThatBelongsThere = $('.timeline-article').eq(z);
+                z++;
+                eventThatBelongsThere.attr("id", "eventSet" + z);
+            } while (z < noOfTimeLine);
+
+            var noOfLeftEvent = $('.content-left').length;
+            var indexForNoOfLeftEvent = 0;
+            var noToGiveForNoOfLeftEvent = 1;
+            do {
+                var leftEventThatBelongsThere = $('.content-left').eq(indexForNoOfLeftEvent);
+                leftEventThatBelongsThere.attr("id", "divForCPE" + noToGiveForNoOfLeftEvent);
+                indexForNoOfLeftEvent++;
+                noToGiveForNoOfLeftEvent += 2;
+            } while (indexForNoOfLeftEvent < noOfLeftEvent);
+
+            var noOfTextAreaEvent = $('textarea[name$="textAreasForEvents"]').length;
+            var indexForNoOfTextAreaEvent = 0;
+            do {
+                var textAreaEventThatBelongsThere = $('textarea[name$="textAreasForEvents"]').eq(indexForNoOfTextAreaEvent);
+                indexForNoOfTextAreaEvent++;
+                textAreaEventThatBelongsThere.attr("id", "textAreaSet" + indexForNoOfTextAreaEvent);
+            } while (indexForNoOfTextAreaEvent < noOfTextAreaEvent);
+
+            var noOfRightEvent = $('.content-right').length;
+            var indexForNoOfRightEvent = 0;
+            var noToGiveForNoOfRightEvent = 2;
+            do {
+                var rightEventThatBelongsThere = $('.content-right').eq(indexForNoOfRightEvent);
+                rightEventThatBelongsThere.attr("id", "divForCPE" + noToGiveForNoOfRightEvent);
+                indexForNoOfRightEvent++;
+                noToGiveForNoOfRightEvent += 2;
+            } while (indexForNoOfRightEvent < noOfRightEvent);
+
+            var noOfHeaderForEvent = $('.headerForEvent').length;
+            var indexForHeaderForEvent = 0;
+            do {
+                var headerEventThatBelongsThere = $('.headerForEvent').eq(indexForHeaderForEvent);
+                indexForHeaderForEvent++;
+                headerEventThatBelongsThere.attr("id", "uniqueheaderForEvent" + indexForHeaderForEvent);
+            } while (indexForHeaderForEvent < noOfHeaderForEvent);
+
+            var noOfColorPickerEvent = $('input[name$="colorPickerForEvent"]').length;
+            var indexForColorInputEvent = 0;
+            do {
+                var colorPickerEventThatBelongsThere = $('input[name$="colorPickerForEvent"]').eq(indexForColorInputEvent);
+                indexForColorInputEvent++;
+                colorPickerEventThatBelongsThere.attr("id", "colorForEvent" + indexForColorInputEvent);
+            } while (indexForColorInputEvent < noOfColorPickerEvent);
+
+            var myCheckEventItems = $('input[name$="myCheckEvent"]').length;
+            var indexFormyCheckEvent = 0;
+            var ActualindexFormyCheckEvent = 0;
+            do {
+                var myCheckEventThatBelongsThere = $('input[name$="myCheckEvent"]').eq(indexFormyCheckEvent);
+                indexFormyCheckEvent++;
+                ActualindexFormyCheckEvent += 2;
+                myCheckEventThatBelongsThere.attr("id", "myCheckEvent" + ActualindexFormyCheckEvent);
+            } while (indexFormyCheckEvent < myCheckEventItems);
+
+            var noOflabelSetForLastModifiedItems = $('input[name$="labelSetForLastModified"]').length;
+            var indexForlabelSetForLastModified = 0;
+            do {
+                var labelSetForLastModifiedForNotes = $('input[name$="labelSetForLastModified"]').eq(indexForlabelSetForLastModified);
+                indexForlabelSetForLastModified++;
+                labelSetForLastModifiedForNotes.attr("id", "labelSetForLastModified" + indexForlabelSetForLastModified);
+            } while (indexForlabelSetForLastModified < noOflabelSetForLastModifiedItems);
+            //Event ends
+
+
+
+
+
+
+            //If start time is not empty, the first green circle will have the start time value
+            if(document.getElementById("startTimeInput").value != ''){
+                var firstCircle = $('.date').eq(0);
+                firstCircle.html(document.getElementById("startTimeInput").value);
+                document.getElementById("middleTimeHidden1").value = document.getElementById("startTimeInput").value;
+            }
+
+            //Count number of green circle
+            var circleForTimeCount = $('.date').length;
+
+            for(t = 1; t <= circleForTimeCount; t++){
+                
+                var circleTime = document.getElementById("middleTimeHidden" + t).value;
+
+                var previousStartTime = circleTime;
+                var previousgoDuration = document.getElementById("addDurationInput" + t).value;
+                var previousgoMinutes = document.getElementById("addMinutesInput" + t).value;
+
+                //There must be start time, duration and minutes input
+                //Calculate the time
+                if(previousStartTime != '' && previousgoDuration != '' && previousgoMinutes != ''){
+                    var strTime = previousStartTime.split(":");
+                    var theHour = parseInt(strTime[0]);
+                    var theMin = parseInt(strTime[1]);
+
+                    //The previous start time's minute add the minutes user input
+                    theMin += parseInt(previousgoMinutes);
+                    var NumberOfHoursIntheMinutes = Math.floor((theMin/60));
+                    theMin -= (NumberOfHoursIntheMinutes * 60);
+
+                    //Add the number of hours the minute exceeds 60 minute
+                    theHour += NumberOfHoursIntheMinutes + parseInt(previousgoDuration);
+
+                    if(theHour >= 24){
+                        theHour -= 24;
+                    }
+
+                    if(theHour < 10){
+                        theHour = "0" + theHour;
+                    }
+                    
+                    if(theMin < 10){
+                        theMin = "0" + theMin;
+                    }
+
+                    //Display end time
+                    var theendTime = $('.endTime').eq(0);
+                    theendTime.val(theHour + ":" + theMin);
+
+                    //The next green circle has the increased time
+                    if(document.getElementById("middleTimeHidden" + (t + 1)) != undefined){
+                        var theCircleTime = $('.date').eq(t);
+                        theCircleTime.html(theHour + ":" + theMin);
+                        document.getElementById("middleTimeHidden" + (t + 1)).value = theHour + ":" + theMin;
+                    }
+               }
+            }
+
+            //If sessionStorage is not empty
+            if (sessionStorage.length != 0) {
+                //Get all sessionStorage data
+                var uniqueheaderForEventStoredArray = JSON.parse(sessionStorage.getItem("uniqueheaderForEventArray"));//no brackets
+                var colorForEventStoredArray = JSON.parse(sessionStorage.getItem("colorForEventArray"));//no brackets
+                var textAreaSetStoredArray = JSON.parse(sessionStorage.getItem("textAreaSetArray"));//no brackets
+                var labelSetForLastModifiedStoredArray = JSON.parse(sessionStorage.getItem("labelSetForLastModifiedArray"));//no brackets
+                var addDurationInputStoredArray = JSON.parse(sessionStorage.getItem("addDurationInputArray"));//no brackets
+                var addMinutesInputStoredArray = JSON.parse(sessionStorage.getItem("addMinutesInputArray"));//no brackets
+                
+                document.getElementById("copiedLbl").innerHTML = "Copied to Clipboard"
+                var count = 0;
+                var everythingisCopiedHere = 0;
+                var noOfHeaderForEvent = $('.headerForEvent').length;
+
+                //If stored array is not empty, myCheckEvent checkbox will be checked when the event is already stored in session storage
+                if(uniqueheaderForEventStoredArray != ""){
+                    if(uniqueheaderForEventStoredArray != null){ 
+        
+                        for (a = 0; a < uniqueheaderForEventStoredArray.length; a++) {
+                            for(v = 2; v <= noOfHeaderForEvent; v+=2){
+                                if(uniqueheaderForEventStoredArray[a] == document.getElementById("uniqueheaderForEvent" + (v - 1)).value){
+                                    if(colorForEventStoredArray[a] == document.getElementById("colorForEvent" + (v - 1)).value){
+                                        if(textAreaSetStoredArray[a] == document.getElementById("textAreaSet" + (v - 1)).value){
+                                            if(labelSetForLastModifiedStoredArray[a] == document.getElementById("labelSetForLastModified" + (v - 1)).value){
+                                                count++;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                if(uniqueheaderForEventStoredArray[a] == document.getElementById("uniqueheaderForEvent" + v).value){
+                                    if(colorForEventStoredArray[a] == document.getElementById("colorForEvent" + v).value){
+                                        if(textAreaSetStoredArray[a] == document.getElementById("textAreaSet" + v).value){
+                                            if(labelSetForLastModifiedStoredArray[a] == document.getElementById("labelSetForLastModified" + v).value){
+                                                if(count == 1){
+                                                    document.getElementById("myCheckEvent" + v).checked = true;
+                                                    count = 0;
+                                                    everythingisCopiedHere++;
+                                                }
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                if(v == noOfHeaderForEvent && count == 1){
+                                    count = 0;
+                                }
+                            }
+                        }
+                    }
+                    else{
+                        document.getElementById("copiedLbl").innerHTML = "";
+                    }
+                }
+                else{
+                    document.getElementById("copiedLbl").innerHTML = "";
+                }
+            }
+
+
+
+
+            
+            // Putting hour (duration), minutes and time into respective place
+            var noOfTempDurationHolder = $('.displayDuration').length;
+            var indexForTempDurationHolder = 0;
+            do {
+                var theTempDurationHolder = $('.displayDuration').eq(indexForTempDurationHolder);
+                indexForTempDurationHolder++;
+                theTempDurationHolder.attr("id", "displayDuration" + indexForTempDurationHolder);
+            } while (indexForTempDurationHolder < noOfTempDurationHolder);
+
+            var noOfTempMinutesHolder = $('.displayMinutes').length;
+            var indexForTempMinutesHolder = 0;
+            do {
+                var theTempMinutesHolder = $('.displayMinutes').eq(indexForTempMinutesHolder);
+                indexForTempMinutesHolder++;
+                theTempMinutesHolder.attr("id", "displayMinutes" + indexForTempMinutesHolder);
+            } while (indexForTempMinutesHolder < noOfTempMinutesHolder);
+
+            var noOfTempTimeHolder = $('.displayTime').length;
+            var indexForTempTimeHolder = 0;
+            do {
+                var theTempTimeHolder = $('.displayTime').eq(indexForTempTimeHolder);
+                indexForTempTimeHolder++;
+                theTempTimeHolder.attr("id", "displayTime" + indexForTempTimeHolder);
+            } while (indexForTempTimeHolder < noOfTempTimeHolder);
+
+            var noOfTempHolders = $('.displayDuration').length;
+            // Put in respective place
+            for (indexForPlacing = 1; indexForPlacing <= noOfTempHolders; indexForPlacing++) {
+                var thatDuration = "addDurationInput" + indexForPlacing;
+                var thatTempDuration = "displayDuration" + indexForPlacing;
+                document.getElementById(thatDuration).value = document.getElementById(thatTempDuration).value;
+                var thatMinutes = "addMinutesInput" + indexForPlacing;
+                var thatTempMinutes = "displayMinutes" + indexForPlacing;
+                document.getElementById(thatMinutes).value = document.getElementById(thatTempMinutes).value;
+                var thatTime = "inputForStartTime" + indexForPlacing;
+                var thatTempTime = "displayTime" + indexForPlacing;
+                document.getElementById(thatTime).value = document.getElementById(thatTempTime).value;
+            }
+        });
+
+        function checkeverytime() {
+            // All Notes related that has an id: 1) outer div, 2) header, 3) textarea, 4) colorpicker 5) delete button
+            var noOfDivForNC = $('.parent').length;
+            var indexForDivForNC = 0;
+            do {
+                var notesDivForNCThatBelongsThere = $('.parent').eq(indexForDivForNC);
+                var colorPickerThere = $('input[name$="colorPickerForNote"]').eq(indexForDivForNC);
+                indexForDivForNC++;
+                notesDivForNCThatBelongsThere.attr("id", "divForNC" + indexForDivForNC);
+                colorPickerThere.attr("id", "color" + indexForDivForNC);
+            } while (indexForDivForNC < noOfDivForNC);
+
+            var removeNotesBtnItems = $('button[name$="goRemoveNotes"]').length;
+            var indexForRemoveNotesBtn = 0;
+            do {
+                var deleteNoteBtnThatBelongsThere = $('button[name$="goRemoveNotes"]').eq(indexForRemoveNotesBtn);
+                indexForRemoveNotesBtn++;
+                deleteNoteBtnThatBelongsThere.attr("id", "removeBtn" + indexForRemoveNotesBtn);
+            } while (indexForRemoveNotesBtn < removeNotesBtnItems);
+
+            var noOfTextAreaForNotes = $('textarea[name$="goTextArea"]').length;
+            var indexForTextAreaForNotes = 0;
+            do {
+                var textAreaForNotesThatBelongsThere = $('textarea[name$="goTextArea"]').eq(indexForTextAreaForNotes);
+                indexForTextAreaForNotes++;
+                textAreaForNotesThatBelongsThere.attr("id", "textArea" + indexForTextAreaForNotes);
+            } while (indexForTextAreaForNotes < noOfTextAreaForNotes);
+
+            var noOfHeadersForNotes = $('.headersNotes').length;
+            var indexForHeaderForNotes = 0;
+            do {
+                var headersForNotesThatBelongsThere = $('.headersNotes').eq(indexForHeaderForNotes);
+                indexForHeaderForNotes++;
+                headersForNotesThatBelongsThere.attr("id", "headerForNotes" + indexForHeaderForNotes);
+            } while (indexForHeaderForNotes < noOfHeadersForNotes);
+            //Notes ends
+
+
+
+
+            
+
+
+
+
+
+            // All Event related that has an id: 1) colorPicker, 2) Hour/Duration, 3) Minutes, 4) Start Time, 5) Add Event, 6) Remove Event, 7) timeline-article, 8) content-left, 9) textarea, 10) content-right, 11) headerForEvent, 12) span Circle
+            var durationItem = $('input[name$="goDuration"]').length;
+            var i = 0;
+            do {
+                var durationInputThatBelongsThere = $('input[name$="goDuration"]').eq(i);
+                var circleSpanThatBelongsThere = $('.date').eq(i)
+                var circleInputHidden = $('input[name="middleTimeHidden"]').eq(i)
+                i++;
+                durationInputThatBelongsThere.attr("id", "addDurationInput" + i);
+                circleSpanThatBelongsThere.attr("id", "circleForEvent" + i);
+                circleInputHidden.attr("id", "middleTimeHidden" + i);
+            } while (i < durationItem);
+
+            var minutesItem = $('input[name$="goMinutes"]').length;
+            var j = 0;
+            do {
+                var minutesInputThatBelongsThere = $('input[name$="goMinutes"]').eq(j);
+                j++;
+                minutesInputThatBelongsThere.attr("id", "addMinutesInput" + j);
+            } while (j < minutesItem);
+
+            var startTimeItem = $('input[name$="goTime"]').length;
+            var b = 0;
+            do {
+                var startTimeInputThatBelongsThere = $('input[name$="goTime"]').eq(b);
+                b++;
+                startTimeInputThatBelongsThere.attr("id", "inputForStartTime" + b);
+            } while (b < startTimeItem);
+
+            var addEventBtnItem = $('input[name$="goButton"]').length;
+            var x = 0;
+            do {
+                var eventBtnThatBelongsThere = $('input[name$="goButton"]').eq(x);
+                x++;
+                eventBtnThatBelongsThere.attr("id", "addEventBtn" + x);
+            } while (x < addEventBtnItem);
+
+            var removeEventBtnItem = $('button[name$="goRemoveEvents"]').length;
+            var y = 0;
+            do {
+                var deleteBtnThatBelongsThere = $('button[name$="goRemoveEvents"]').eq(y);
+                y++;
+                deleteBtnThatBelongsThere.attr("id", "removeEventBtn" + y);
+            } while (y < removeEventBtnItem);
+
+            var noOfTimeLine = $('.timeline-article').length;
+            var z = 0;
+            do {
+                var eventThatBelongsThere = $('.timeline-article').eq(z);
+                z++;
+                eventThatBelongsThere.attr("id", "eventSet" + z);
+            } while (z < noOfTimeLine);
+
+            var noOfLeftEvent = $('.content-left').length;
+            var indexForNoOfLeftEvent = 0;
+            var noToGiveForNoOfLeftEvent = 1;
+            do {
+                var leftEventThatBelongsThere = $('.content-left').eq(indexForNoOfLeftEvent);
+                leftEventThatBelongsThere.attr("id", "divForCPE" + noToGiveForNoOfLeftEvent);
+                indexForNoOfLeftEvent++;
+                noToGiveForNoOfLeftEvent += 2;
+            } while (indexForNoOfLeftEvent < noOfLeftEvent);
+
+            var noOfTextAreaEvent = $('textarea[name$="textAreasForEvents"]').length;
+            var indexForNoOfTextAreaEvent = 0;
+            do {
+                var textAreaEventThatBelongsThere = $('textarea[name$="textAreasForEvents"]').eq(indexForNoOfTextAreaEvent);
+                indexForNoOfTextAreaEvent++;
+                textAreaEventThatBelongsThere.attr("id", "textAreaSet" + indexForNoOfTextAreaEvent);
+            } while (indexForNoOfTextAreaEvent < noOfTextAreaEvent);
+
+            var noOfRightEvent = $('.content-right').length;
+            var indexForNoOfRightEvent = 0;
+            var noToGiveForNoOfRightEvent = 2;
+            do {
+                var rightEventThatBelongsThere = $('.content-right').eq(indexForNoOfRightEvent);
+                rightEventThatBelongsThere.attr("id", "divForCPE" + noToGiveForNoOfRightEvent);
+                indexForNoOfRightEvent++;
+                noToGiveForNoOfRightEvent += 2;
+            } while (indexForNoOfRightEvent < noOfRightEvent);
+
+            var noOfHeaderForEvent = $('.headerForEvent').length;
+            var indexForHeaderForEvent = 0;
+            do {
+                var headerEventThatBelongsThere = $('.headerForEvent').eq(indexForHeaderForEvent);
+                indexForHeaderForEvent++;
+                headerEventThatBelongsThere.attr("id", "uniqueheaderForEvent" + indexForHeaderForEvent);
+            } while (indexForHeaderForEvent < noOfHeaderForEvent);
+
+            var noOfColorPickerEvent = $('input[name$="colorPickerForEvent"]').length;
+            var indexForColorInputEvent = 0;
+            do {
+                var colorPickerEventThatBelongsThere = $('input[name$="colorPickerForEvent"]').eq(indexForColorInputEvent);
+                indexForColorInputEvent++;
+                colorPickerEventThatBelongsThere.attr("id", "colorForEvent" + indexForColorInputEvent);
+            } while (indexForColorInputEvent < noOfColorPickerEvent);
+
+            var myCheckEventItems = $('input[name$="myCheckEvent"]').length;
+            var indexFormyCheckEvent = 0;
+            var ActualindexFormyCheckEvent = 0;
+            do {
+                var myCheckEventThatBelongsThere = $('input[name$="myCheckEvent"]').eq(indexFormyCheckEvent);
+                indexFormyCheckEvent++;
+                ActualindexFormyCheckEvent += 2;
+                myCheckEventThatBelongsThere.attr("id", "myCheckEvent" + ActualindexFormyCheckEvent);
+            } while (indexFormyCheckEvent < myCheckEventItems);
+
+            var noOflabelSetForLastModifiedItems = $('input[name$="labelSetForLastModified"]').length;
+            var indexForlabelSetForLastModified = 0;
+            do {
+                var labelSetForLastModifiedForNotes = $('input[name$="labelSetForLastModified"]').eq(indexForlabelSetForLastModified);
+                indexForlabelSetForLastModified++;
+                labelSetForLastModifiedForNotes.attr("id", "labelSetForLastModified" + indexForlabelSetForLastModified);
+            } while (indexForlabelSetForLastModified < noOflabelSetForLastModifiedItems);
+            //Event ends
+
+
+
+
+
+
+
+            //If start time is not empty, the first green circle will have the start time value
+            if(document.getElementById("startTimeInput").value != ''){
+                var firstCircle = $('.date').eq(0);
+                firstCircle.html(document.getElementById("startTimeInput").value);
+                document.getElementById("middleTimeHidden1").value = document.getElementById("startTimeInput").value;
+            }
+
+            //Count number of green circle
+            var circleForTimeCount = $('.date').length;
+
+            for(t = 1; t <= circleForTimeCount; t++){
+                
+                var circleTime = document.getElementById("middleTimeHidden" + t).value;
+
+                var previousStartTime = circleTime;
+                var previousgoDuration = document.getElementById("addDurationInput" + t).value;
+                var previousgoMinutes = document.getElementById("addMinutesInput" + t).value;
+
+                //There must be start time, duration and minutes input
+                //Calculate the time
+                if(previousStartTime != '' && previousgoDuration != '' && previousgoMinutes != ''){
+                    var strTime = previousStartTime.split(":");
+                    var theHour = parseInt(strTime[0]);
+                    var theMin = parseInt(strTime[1]);
+
+                    //The previous start time's minute add the minutes user input
+                    theMin += parseInt(previousgoMinutes);
+                    var NumberOfHoursIntheMinutes = Math.floor((theMin/60));
+                    theMin -= (NumberOfHoursIntheMinutes * 60);
+
+                    //Add the number of hours the minute exceeds 60 minute
+                    theHour += NumberOfHoursIntheMinutes + parseInt(previousgoDuration);
+
+                    if(theHour >= 24){
+                        theHour -= 24;
+                    }
+
+                    if(theHour < 10){
+                        theHour = "0" + theHour;
+                    }
+                    
+                    if(theMin < 10){
+                        theMin = "0" + theMin;
+                    }
+
+                    //Display end time
+                    var theendTime = $('.endTime').eq(0);
+                    theendTime.val(theHour + ":" + theMin);
+
+                    //The next green circle has the increased time
+                    if(document.getElementById("middleTimeHidden" + (t + 1)) != undefined){
+                        var theCircleTime = $('.date').eq(t);
+                        theCircleTime.html(theHour + ":" + theMin);
+                        document.getElementById("middleTimeHidden" + (t + 1)).value = theHour + ":" + theMin;
+                    }
+               }
+            }
+        }
+
+
+
+
+
+
+
+
+        // Add new note
+        var myVar
+        var counterForNotes = 12;
+        $('#addNewNoteBtn').on('click', function () {
+            document.getElementById("overlayForNotes").style.display = "block";
+            myVar = setTimeout(makeOverlayGone, 4000);
+            // <h4 id='headerForNotes" + counterForNotes + "' contenteditable='true' data-placeholder='Title...' class='headersNotes'></h4>
+            $("#flexContainerId").append("<div class='parent' id='divForNC" + counterForNotes + "' style='background-color: #c0c0c0'><input name='headerForNotesName' placeholder='Title...' id='headerForNotes" + counterForNotes + "' class='headersNotes' style='background-color: #c0c0c0'><input title='Use this button to change the color of the note' type='color' value='#c0c0c0' id='color" + counterForNotes + "' name='colorPickerForNote'><button title='Use this button to delete this note' type='button' name='goRemoveNotes' id='removeBtn" + counterForNotes + "' class='btn btn-danger' >Delete</button><textarea class='notesTextArea' id='textArea" + counterForNotes + "' name='goTextArea'></textarea></div>");
+            counterForNotes++;
+            var newscript = document.createElement('script');
+            var insidescript = document.createTextNode("tinymce.init({selector: 'textarea:not(.commentsInput)', content_css: '//www.tiny.cloud/css/codepen.min.css', plugins: 'print preview searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap emoticons', toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment', image_title: true, automatic_uploads: true, file_picker_types: 'image', file_picker_callback: function (cb, value, meta) {var input = document.createElement('input'); input.setAttribute('type', 'file'); input.setAttribute('accept', 'image/*'); input.onchange = function () { var file = this.files[0]; var reader = new FileReader(); reader.onload = function () { var id = 'blobid' + (new Date()).getTime(); var blobCache = tinymce.activeEditor.editorUpload.blobCache; var base64 = reader.result.split(',')[1]; var blobInfo = blobCache.create(id, file, base64); blobCache.add(blobInfo); cb(blobInfo.blobUri(), { title: file.name }); }; reader.readAsDataURL(file); }; input.click();}});");
+            newscript.appendChild(insidescript);
+            $("textarea").append(newscript);
+        });
+
+        //Note change color
+        $('#flexContainerId').on('change', 'input[name$="colorPickerForNote"]', function () {
+            var specificIdOfColorPicker = event.target.id;
+            console.log(specificIdOfColorPicker);
+            var noFromSpecificIdOfColorPicker = specificIdOfColorPicker.substring(5, specificIdOfColorPicker.length);
+            console.log(noFromSpecificIdOfColorPicker);
+
+            var textForDiv = "divForNC" + noFromSpecificIdOfColorPicker;
+            document.getElementById(textForDiv).style.backgroundColor = event.target.value;
+            var inputHeaderToChange = "headerForNotes" + noFromSpecificIdOfColorPicker;
+            document.getElementById(inputHeaderToChange).style.backgroundColor = event.target.value;
+        });
+
+        //Remove note
+        $('#flexContainerId').on('click', 'button[name$="goRemoveNotes"]', function () {
+            var idOfClickedRemoveBtn = this.id;
+            var noFromIdOfClickedRemoveBtn = idOfClickedRemoveBtn.substring(9, idOfClickedRemoveBtn.length);
+
+            var divToDelete = "divForNC" + noFromIdOfClickedRemoveBtn;
+            console.log(divToDelete);
+            var noteToRemove = document.getElementById(divToDelete);
+
+            var rmv = confirm("Are you sure you want to delete this note?");
+            if (rmv == true) {
+                noteToRemove.remove();
+                console.log("Removed successfully: " + noteToRemove);
+            }
+            else {
+                console.log("Failed to remove");
+            }
+        });
+
+        //Add new event
+        var secondMyVar;
+        var counter = 2;
+        var counterColorForEvent = 3;
+        var secondCounterColorForEvent = 4;
+        $('#containerBox').on('click', 'input[name$="goButton"]', function () {
+
+            document.getElementById("overlay").style.display = "block";
+            secondMyVar = setTimeout(off, 1000);
+            // tinymce.remove();
+
+            var specificId = event.target.id;
+            var noFromSpecificId = specificId.substring(11, specificId.length);
+            var text = $('#spanForAN' + noFromSpecificId).html();
+            noFromSpecificId++;
+            //If want to give index 1 2 3 for the events
+
+            //If want to put date there
+            // <h4 class='headerForEvent' contenteditable='true' id='uniqueheaderForEvent" + counterColorForEvent + "' data-placeholder='Title...'></h4>
+            // <h4 contenteditable='true' id='uniqueheaderForEvent" + secondCounterColorForEvent + "' class='headerForEvent' data-placeholder='Title...'></h4>
+
+            var idOfTheEventToDelete = this.id;
+            var noFromIdOfTheEventToDelete = idOfTheEventToDelete.substring(11, idOfTheEventToDelete.length);
+            var whereToInsertAfter = document.getElementById("eventSet" + noFromIdOfTheEventToDelete);
+            $("<div class='timeline-article' id='eventSet" + counter + "'><div class='content-left-container'><div class='content-left' style='background-color: #8080ff' id='divForCPE" + counterColorForEvent + "'><input name='headerForEventName' placeholder='Title...' id='uniqueheaderForEvent" + counterColorForEvent + "' class='headerForEvent' style='background-color: #8080ff'><textarea id='textAreaSet" + counterColorForEvent + "' name='textAreasForEvents' style='height: 400px' class='taclass' contenteditable='true'></textarea><input title='Use this button to change the color of the note' type='color' value='#8080ff' name='colorPickerForEvent' id='colorForEvent" + counterColorForEvent + "' /></div><label>Duration:</label><br /><input type='number' min='0' max='23' name='goDuration' style='width: 50px' id='addDurationInput" + counter + "' />&nbsp<label>hour(s)</label>&nbsp<input type='number' min='0' max='59' name='goMinutes' style='width: 50px' id='addMinutesInput" + counter + "' />&nbsp<label>minute(s)</label><br /><label>Start Time:</label><br /><input name='goTime' type='time' id='inputForStartTime" + counter + "' /></div><div class='content-right-container'><div class='content-right' style='background-color: #80ff00' id='divForCPE" + secondCounterColorForEvent + "'><input name='headerForEventName' placeholder='Title...' id='uniqueheaderForEvent" + secondCounterColorForEvent + "' class='headerForEvent' style='background-color: #80ff00'><textarea id='textAreaSet" + secondCounterColorForEvent + "' name='textAreasForEvents' style='height: 400px' class='taclass' contenteditable='true'></textarea><input title='Use this button to change the color of the note' type='color' value='#80ff00' name='colorPickerForEvent' id='colorForEvent" + secondCounterColorForEvent + "'/></div></div><div class='meta-date'><span class='date' id='circleForEvent" + counter + "'></span></div><button title='Use this button to delete this event' type='button' name='goRemoveEvents' id='removeEventBtn" + counter + "' class='btn clever-btn btn-2' style='display: block; margin-left: auto; margin-right: auto; margin-bottom: 50px; margin-top: 300px'><i class='fa fa-trash' style='font-size: 18px'></i></button><input type='button' value='+' class='btn clever-btn btn-2' name='goButton' title='Use this button to add an event' style='display: block; margin: auto; max-width: 300px; margin-top: 150px; background: #00b0bd; color: rgba(0, 0, 0, 0.50); font-size:xx-large' id='addEventBtn" + counter + "' /></div>").insertAfter(whereToInsertAfter);
+
+            var newscript = document.createElement('script');
+            var insidescript = document.createTextNode("tinymce.init({selector: 'textarea:not(.commentsInput)', content_css: '//www.tiny.cloud/css/codepen.min.css', plugins: 'print preview searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap emoticons', toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl | showcomments addcomment', image_title: true, automatic_uploads: true, file_picker_types: 'image', file_picker_callback: function (cb, value, meta) {var input = document.createElement('input'); input.setAttribute('type', 'file'); input.setAttribute('accept', 'image/*'); input.onchange = function () { var file = this.files[0]; var reader = new FileReader(); reader.onload = function () { var id = 'blobid' + (new Date()).getTime(); var blobCache = tinymce.activeEditor.editorUpload.blobCache; var base64 = reader.result.split(',')[1]; var blobInfo = blobCache.create(id, file, base64); blobCache.add(blobInfo); cb(blobInfo.blobUri(), { title: file.name }); }; reader.readAsDataURL(file); }; input.click();}});");
+            newscript.appendChild(insidescript);
+            $("textarea").append(newscript);
+
+            //check how many divs are created, then take the digit from the id of the button that was clicked (E.g. 1 from addEventBtn1), pass it to the span's id (E.g. spanForAN1), take out text of that span, 
+
+            //test if spanForAN4's index is 2 (if created after 1), if yes then switch spanForAN4's text from 
+            counter++;
+            counterColorForEvent += 2;
+            secondCounterColorForEvent += 2;;
+        });
+
+        $('#containerBox').on('click', 'button[name$="goRemoveEvents"]', function () {
+            console.log("START")
+            var idOfClickedRemoveEventBtn = this.id;
+            var noFromIdOfClickedRemoveEventBtn = idOfClickedRemoveEventBtn.substring(14, idOfClickedRemoveEventBtn.length);
+            //console.log(noFromIdOfClickedRemoveEventBtn);
+            var eventSetToDelete = "eventSet" + noFromIdOfClickedRemoveEventBtn;
+            console.log("EVENT SET TO DELETE: " + eventSetToDelete)
+            var setOfEventToRemove = document.getElementById(eventSetToDelete);
+            console.log("SET OF EVENT TO REMOVE: " + setOfEventToRemove)
+
+            var del = confirm("Are you sure you want to delete this event?");
+            if (del == true) {
+                var eventSetToDelete = "eventSet" + noFromIdOfClickedRemoveEventBtn;
+                console.log("EVENT SET TO DELETE: " + eventSetToDelete)
+                var setOfEventToRemove = document.getElementById(eventSetToDelete);
+                console.log("SET OF EVENT TO REMOVE: " + setOfEventToRemove)
+
+                setOfEventToRemove.remove();
+                console.log("REMOVED SUCCESS: " + setOfEventToRemove)
+            }
+            else {
+                console.log("EVENT SET TO DELETE: " + eventSetToDelete)
+                console.log("SET OF EVENT TO REMOVE: " + setOfEventToRemove)
+                console.log("FAILED TO REMOVE")
+            }
+        });
+
+        $('#containerBox').on('change', 'input[name$="colorPickerForEvent"]', function () {
+            var specificIdOfCPE = event.target.id;
+            console.log(specificIdOfCPE);
+            var noFromSpecificIdOfCPE = specificIdOfCPE.substring(13, specificIdOfCPE.length);
+            console.log(noFromSpecificIdOfCPE);
+
+            var colorForDiv = "divForCPE" + noFromSpecificIdOfCPE;
+            document.getElementById(colorForDiv).style.backgroundColor = event.target.value;
+            var inputHeaderEventToChange = "uniqueheaderForEvent" + noFromSpecificIdOfCPE;
+            document.getElementById(inputHeaderEventToChange).style.backgroundColor = event.target.value;
+        });
+
+        tinyMCE.triggerSave();
+        var noteD = '{"author":[],"authorEmail":[],"theModuleCode":[],"dateAndTimeCreated":[],"headerForNotesName":[],"colorPickerForNotes":[],"goTextArea":[],"headerForEventName":[],"textAreasForEvents":[],"colorPickerForEvent":[],"goDuration":[],"goMinutes":[],"goTime":[],"nameOfLessonPlan":[],"commitMsg":[],"lastModified":[],"notesLastModifiedBy":[],"eventsLastModifiedBy":[]}'
+        function saveToJSON() {
+            var noOfHeadersNotes = $('.headersNotes').length;
+            console.log(noOfHeadersNotes);
+            // headerForNotesName
+            for (var indexForSavingHeadersNotes = 1; indexForSavingHeadersNotes <= noOfHeadersNotes; indexForSavingHeadersNotes++) {
+                // save the header contents first
+                var headerToPush = document.getElementById('headerForNotes' + indexForSavingHeadersNotes).value;
+                var obj = JSON.parse(noteD);
+                obj['headerForNotesName'].push(headerToPush);
+                noteD = JSON.stringify(obj);
+            }
+            // colorPickerForNotes
+            for (var indexForSavingColorNotes = 1; indexForSavingColorNotes <= noOfHeadersNotes; indexForSavingColorNotes++) {
+                // save color of notes
+                var colorNotesToPush = document.getElementById('color' + indexForSavingColorNotes).value;
+                var obj2 = JSON.parse(noteD);
+                obj2['colorPickerForNotes'].push(colorNotesToPush);
+                noteD = JSON.stringify(obj2);
+            }
+            // goTextArea
+            for (var indexForSavingTextAreaNotes = 1; indexForSavingTextAreaNotes <= noOfHeadersNotes; indexForSavingTextAreaNotes++) {
+                // save text area notes
+                var textAreaNotesToPush = document.getElementById('textArea' + indexForSavingTextAreaNotes).value;
+                var obj3 = JSON.parse(noteD);
+                obj3['goTextArea'].push(textAreaNotesToPush);
+                noteD = JSON.stringify(obj3);
+            }
+            // headerForEventName
+            var noOfHeaderEvent = $('.headerForEvent').length;
+            for (var indexForSavingEventNotes = 1; indexForSavingEventNotes <= noOfHeaderEvent; indexForSavingEventNotes++) {
+                // save the event header contents
+                var headerEventToPush = document.getElementById('uniqueheaderForEvent' + indexForSavingEventNotes).value;
+                var obj4 = JSON.parse(noteD);
+                obj4['headerForEventName'].push(headerEventToPush);
+                noteD = JSON.stringify(obj4);
+            }
+            // textAreasForEvents
+            for (var indexForSavingEventTextAreas = 1; indexForSavingEventTextAreas <= noOfHeaderEvent; indexForSavingEventTextAreas++) {
+                var textAreaEventToPush = document.getElementById('textAreaSet' + indexForSavingEventTextAreas).value;
+                var obj5 = JSON.parse(noteD);
+                obj5['textAreasForEvents'].push(textAreaEventToPush);
+                noteD = JSON.stringify(obj5);
+            }
+            // colorPickerForEvent
+            for (var indexForSavingColorEvent = 1; indexForSavingColorEvent <= noOfHeaderEvent; indexForSavingColorEvent++) {
+                var colorEventToPush = document.getElementById('colorForEvent' + indexForSavingColorEvent).value;
+                var obj6 = JSON.parse(noteD);
+                obj6['colorPickerForEvent'].push(colorEventToPush);
+                noteD = JSON.stringify(obj6);
+            }
+            // goDuration
+            var noOfTimeInputs = $('input[name$="goTime"]').length;
+            for (var indexForHourEvent = 1; indexForHourEvent <= noOfTimeInputs; indexForHourEvent++) {
+                var hourEventToPush = document.getElementById('addDurationInput' + indexForHourEvent).value;
+                var obj7 = JSON.parse(noteD);
+                obj7['goDuration'].push(hourEventToPush);
+                noteD = JSON.stringify(obj7);
+            }
+            // goMinutes
+            for (var indexForMinuteEvent = 1; indexForMinuteEvent <= noOfTimeInputs; indexForMinuteEvent++) {
+                var minuteEventToPush = document.getElementById('addMinutesInput' + indexForMinuteEvent).value;
+                var obj8 = JSON.parse(noteD);
+                obj8['goMinutes'].push(minuteEventToPush);
+                noteD = JSON.stringify(obj8);
+            }
+            // goTime
+            for (var indexForTimeEvent = 1; indexForTimeEvent <= noOfTimeInputs; indexForTimeEvent++) {
+                var timeEventToPush = document.getElementById('inputForStartTime' + indexForTimeEvent).value;
+                var obj9 = JSON.parse(noteD);
+                obj9['goTime'].push(timeEventToPush);
+                noteD = JSON.stringify(obj9);
+            }
+            // nameOfLessonPlan
+            var nameOfLessonPlanToPush = document.getElementById('nameOfLessonPlanDisplayed').innerText;
+            var obj10 = JSON.parse(noteD);
+            obj10['nameOfLessonPlan'].push(nameOfLessonPlanToPush);
+            noteD = JSON.stringify(obj10);
+            // author
+            var authorNameToPush = document.getElementById('authorName').innerText;
+            var obj11 = JSON.parse(noteD);
+            obj11['author'].push(authorNameToPush);
+            noteD = JSON.stringify(obj11);
+            // author email
+            var authorEmailToPush = document.getElementById('authorEmail').innerText;
+            var obj12 = JSON.parse(noteD);
+            obj12['authorEmail'].push(authorEmailToPush);
+            noteD = JSON.stringify(obj12);
+            // module code
+            var moduleCodeToPush = document.getElementById('moduleCodeDisplayed').innerText;
+            var obj13 = JSON.parse(noteD);
+            obj13['theModuleCode'].push(moduleCodeToPush);
+            noteD = JSON.stringify(obj13);
+            // Date and Time Created
+            var dateAndTimeToPush = document.getElementById('creationDateAndTimeForLP').innerText;
+            var obj14 = JSON.parse(noteD);
+            obj14['dateAndTimeCreated'].push(dateAndTimeToPush);
+            noteD = JSON.stringify(obj14);
+            // Commit message
+            var commitMsgToPush = document.getElementById('commitMsgInput').value;
+            var obj15 = JSON.parse(noteD);
+            obj15['commitMsg'].push(commitMsgToPush);
+            noteD = JSON.stringify(obj15);
+            // Last modified
+            var lastModifiedToPush = document.getElementById('lastModifiedDateAndTimeDisplayed').innerText;
+            var obj16 = JSON.parse(noteD);
+            obj16['lastModified'].push(lastModifiedToPush);
+            noteD = JSON.stringify(obj16);
+            console.log(noteD);
+            // console.log(JSON.stringify(noteD));
+
+            // Notes last modified by (notesLastModifiedBy)
+            var noOfNotesLastModified = $('.labelForLastModifiedBy').length
+            for(var i = 0; i < noOfNotesLastModified; i++) {
+                var inputOfNotesLastModified = $('.labelForLastModifiedBy').eq(i).val();
+                var obj17 = JSON.parse(noteD);
+                obj17['notesLastModifiedBy'].push(inputOfNotesLastModified);
+                noteD = JSON.stringify(obj17);
+            }
+
+            // Events last modified by (eventsLastModifiedBy)
+            var noOfEventsLastModified = $('.labelSetForLastModified').length
+            for(var j = 0; j < noOfEventsLastModified; j++) {
+                var inputOfEventsLastModified = $('.labelSetForLastModified').eq(j).val();
+                var obj18 = JSON.parse(noteD);
+                obj18['eventsLastModifiedBy'].push(inputOfEventsLastModified);
+                noteD = JSON.stringify(obj18);
+            }
+
+            // Allow download with same lesson plan name (nameOfLessonPlanToPush)
+            download(nameOfLessonPlanToPush + ".json", noteD);
+        }
+
+        function download(filename, content) {
+            var element = document.createElement('a');
+            element.style.display = 'none';
+            element.setAttribute('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', filename);
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+
+
+
+
+
+  
+        $('#ModalPopUpForDeletion').on('click', 'button[name$="ConfirmDeleteBtnInModal"]', function (event) {
+            $('#exampleModal').modal('hide');
+            var idOfcommentDeleteBtn = document.getElementById("idOfDeleteBtn").innerHTML;
+            var idOfcommentDeleteBtnText = idOfcommentDeleteBtn.substring(0, 16);
+            var noFromidOfcommentDeleteBtn = parseInt(idOfcommentDeleteBtn.substring(16, idOfcommentDeleteBtn.length));
+            var commentToRemove = document.getElementById('commentsDivRight' + noFromidOfcommentDeleteBtn);
+            
+            if(idOfcommentDeleteBtnText == 'commentDeleteBtn'){
+                commentToRemove.remove();
+                $("#CommentCommentBtn1").click()
+            }
+        });
+
+
+        //Check all timeline to copy
+        $("#selectAllBtn").click(function(){
+            if(document.getElementById("selectAllBtn").innerHTML == "Select All"){
+                var noOfHeaderForEvent = $('.headerForEvent').length;
+                for (i = 2; i <= noOfHeaderForEvent; i+=2) {
+                    document.getElementById("myCheckEvent" + i).checked = true
+                }
+                document.getElementById("selectAllBtn").innerHTML = "Unselect All";
+            }
+            else if(document.getElementById("selectAllBtn").innerHTML == "Unselect All"){
+                var noOfHeaderForEvent = $('.headerForEvent').length;
+                for (i = 2; i <= noOfHeaderForEvent; i+=2) {
+                    document.getElementById("myCheckEvent" + i).checked = false
+                }
+                document.getElementById("selectAllBtn").innerHTML = "Select All";
+            }
+        });
+
+
+
+
+        $("#copyBtn").click(function(){
+            var durationItem = $('input[name$="goDuration"]').length;
+            var i = 0;
+            var actualindexForgoDuration = 0;
+            do {
+                var durationInputThatBelongsThere = $('input[name$="goDuration"]').eq(i);
+                i++;
+                actualindexForgoDuration += 2;
+                durationInputThatBelongsThere.attr("id", "addDurationInput" + actualindexForgoDuration);
+            } while (i < durationItem);
+
+            var minutesItem = $('input[name$="goMinutes"]').length;
+            var j = 0;
+            var actualindexForgoMinutes = 0;
+            do {
+                var minutesInputThatBelongsThere = $('input[name$="goMinutes"]').eq(j);
+                j++;
+                actualindexForgoMinutes += 2;
+                minutesInputThatBelongsThere.attr("id", "addMinutesInput" + actualindexForgoMinutes);
+            } while (j < minutesItem);
+
+            var noOfHeaderForEvent = $('.headerForEvent').length;
+            var uniqueheaderForEventArray = [];
+            var colorForEventArray = [];
+            var textAreaSetArray = [];
+            var labelSetForLastModifiedArray = [];
+            var addDurationInputArray = [];
+            var addMinutesInputArray = [];
+
+            for (i = 2; i <= noOfHeaderForEvent; i+=2) {           
+                if(document.getElementById("myCheckEvent" + i).checked){
+                    //left event
+                    uniqueheaderForEventArray.push(document.getElementById("uniqueheaderForEvent" + (i - 1)).value)
+                    colorForEventArray.push(document.getElementById("colorForEvent" + (i - 1)).value)
+                    textAreaSetArray.push(document.getElementById("textAreaSet" + (i - 1)).value)
+                    labelSetForLastModifiedArray.push(document.getElementById("labelSetForLastModified" + (i - 1)).value)
+
+                    addDurationInputArray.push(document.getElementById("addDurationInput" + i).value)
+                    addMinutesInputArray.push(document.getElementById("addMinutesInput" + i).value)
+                    //right event
+                    uniqueheaderForEventArray.push(document.getElementById("uniqueheaderForEvent" + i).value)
+                    colorForEventArray.push(document.getElementById("colorForEvent" + i).value)
+                    textAreaSetArray.push(document.getElementById("textAreaSet" + i).value)
+                    labelSetForLastModifiedArray.push(document.getElementById("labelSetForLastModified" + i).value)
+                }
+            }
+
+            window.sessionStorage.setItem("uniqueheaderForEventArray", JSON.stringify(uniqueheaderForEventArray));
+            window.sessionStorage.setItem("colorForEventArray", JSON.stringify(colorForEventArray));
+            window.sessionStorage.setItem("textAreaSetArray", JSON.stringify(textAreaSetArray));
+            window.sessionStorage.setItem("labelSetForLastModifiedArray", JSON.stringify(labelSetForLastModifiedArray));
+            window.sessionStorage.setItem("addDurationInputArray", JSON.stringify(addDurationInputArray));
+            window.sessionStorage.setItem("addMinutesInputArray", JSON.stringify(addMinutesInputArray));
+
+            document.getElementById("copiedLbl").innerHTML = "Copied to Clipboard"
+        });
+
+        $("#clearBtn").click(function(){
+            sessionStorage.clear();
+            document.getElementById("copiedLbl").innerHTML = "Cleared!"
+        });
+    </script>
+
+</body>
+
+</html>
